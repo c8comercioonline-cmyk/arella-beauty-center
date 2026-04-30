@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const fs = require('fs');
+const { google } = require('googleapis');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -281,6 +282,102 @@ function seedData() {
   }
 }
 
+// ── GOOGLE CALENDAR SETUP ──
+let calendarClient = null;
+
+function getCalendarClient() {
+  if (calendarClient) return calendarClient;
+
+  const cfg = getConfigPublica();
+  if (!cfg.google_cal_email || !cfg.google_cal_private_key) {
+    console.log('Google Calendar: credenciais não configuradas');
+    return null;
+  }
+
+  try {
+    calendarClient = new google.auth.JWT(
+      cfg.google_cal_email,
+      null,
+      cfg.google_cal_private_key,
+      ['https://www.googleapis.com/auth/calendar']
+    );
+    return calendarClient;
+  } catch (e) {
+    console.error('Google Calendar: erro ao configurar credenciais:', e.message);
+    return null;
+  }
+}
+
+async function createCalendarEvent(appointment) {
+  const cfg = getConfigPublica();
+  if (!cfg.google_cal_calendar_id) {
+    console.log('Google Calendar: calendar_id não configurado');
+    return null;
+  }
+
+  const auth = getCalendarClient();
+  if (!auth) return null;
+
+  try {
+    const calendar = google.calendar({ version: 'v3', auth });
+
+    // Converter data e horário para formato ISO
+    const [year, month, day] = appointment.data.split('-');
+    const [hour, minute] = appointment.horario.split(':');
+
+    const startDateTime = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
+    const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000); // +1 hora
+
+    const event = {
+      summary: `✨ ${appointment.servico} - ${appointment.nome}`,
+      description: `
+🌸 *Arella Beauty Center*
+
+👤 Cliente: ${appointment.nome}
+📱 Telefone: ${appointment.telefone}
+${appointment.email ? `📧 Email: ${appointment.email}` : ''}
+${appointment.observacoes ? `\n📝 Obs: ${appointment.observacoes}` : ''}
+
+_Agendado via site_
+      `.trim(),
+      start: {
+        dateTime: startDateTime.toISOString(),
+        timeZone: 'America/Sao_Paulo',
+      },
+      end: {
+        dateTime: endDateTime.toISOString(),
+        timeZone: 'America/Sao_Paulo',
+      },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 60 },
+          { method: 'popup', minutes: 30 },
+        ],
+      },
+    };
+
+    // Se tem email do cliente, convida ele
+    if (appointment.email) {
+      event.attendees = [
+        { email: appointment.email },
+      ];
+      event.sendUpdates = 'all';
+    }
+
+    const response = await calendar.events.insert({
+      calendarId: cfg.google_cal_calendar_id,
+      resource: event,
+    });
+
+    console.log('Google Calendar: evento criado', response.data.id);
+    return response.data.id;
+  } catch (e) {
+    console.error('Google Calendar: erro ao criar evento:', e.message);
+    return null;
+  }
+}
+
 // ── EMAIL TRANSPORTER ──
 function getTransporter() {
   const cfg = getConfigPublica();
@@ -388,6 +485,10 @@ app.post('/api/agendamentos', (req, res) => {
       'INSERT INTO agendamentos (nome, email, telefone, servico, data, horario, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [nome, email || '', telefone, servico, data, horario, observacoes || '']
     );
+
+    // Criar evento no Google Calendar
+    const appointment = { nome, email, telefone, servico, data, horario, observacoes };
+    createCalendarEvent(appointment).catch(console.error);
 
     const cfg = getConfigPublica();
     const transporter = getTransporter();

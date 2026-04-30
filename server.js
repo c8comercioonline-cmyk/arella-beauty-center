@@ -295,10 +295,16 @@ function getCalendarClient() {
   }
 
   try {
+    // Converter \n literal para quebras de linha reais
+    const privateKey = cfg.google_cal_private_key
+      .replace(/\\n/g, '\n')
+      .replace(/^"/, '')
+      .replace(/"$/, '');
+
     calendarClient = new google.auth.JWT(
       cfg.google_cal_email,
       null,
-      cfg.google_cal_private_key,
+      privateKey,
       ['https://www.googleapis.com/auth/calendar']
     );
     return calendarClient;

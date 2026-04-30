@@ -295,25 +295,20 @@ function getCalendarClient() {
   }
 
   try {
-    // Debug: mostrar início da chave (sem a parte secreta)
-    console.log('Google Calendar: email=', cfg.google_cal_email);
-    console.log('Google Calendar: key length=', cfg.google_cal_private_key.length);
-    console.log('Google Calendar: key start=', cfg.google_cal_private_key.substring(0, 50));
-
-    // Converter \n literal (duas barras) para quebras de linha reais
     let privateKey = cfg.google_cal_private_key;
 
-    // Substituir \n literal (texto) por quebra real
+    // Converter \n literal (barra invertida + n) para quebra de linha real
     privateKey = privateKey.replace(/\\n/g, '\n');
 
-    // Remover aspas extras se houver
+    // Remover possiveis aspas extras
     privateKey = privateKey.replace(/^["']|["']$/g, '');
 
-    // Limpar possiveis espacos em branco extras
-    privateKey = privateKey.trim();
+    // Normalizar dashes (4 -> 5, 6 -> 5)
+    privateKey = privateKey.replace(/^(-{4,})/, '-----');
+    privateKey = privateKey.replace(/(-{4,})$/, '-----');
 
-    console.log('Google Calendar: key processed, length=', privateKey.length);
-    console.log('Google Calendar: key header=', privateKey.substring(0, 40));
+    // Limpar espacos em branco extras
+    privateKey = privateKey.trim();
 
     calendarClient = new google.auth.JWT(
       cfg.google_cal_email,

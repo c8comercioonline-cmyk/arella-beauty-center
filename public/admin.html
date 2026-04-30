@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arella Admin — Painel de Controle</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bd:#050D28;--dk:#0A1640;--dm:#122060;--royal:#1A3490;--bright:#2B52CC;
+  --gold:#C9A96E;--gl:#E8D5B0;--gd:#8B6914;
+  --w:#fff;--muted:rgba(255,255,255,.55);--dim:rgba(255,255,255,.3);
+  --border:rgba(43,82,204,.2);--bordg:rgba(201,169,110,.25);
+  --danger:#E74C3C;--success:#27AE60;
+}
+body{background:var(--bd);color:var(--w);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* ── TYPOGRAPHY ── */
+.ey{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
+.t-page{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,40px);font-weight:300}
+
+/* ── TOAST ── */
+.toast{position:fixed;top:24px;right:24px;z-index:9999;padding:14px 22px;font-size:13px;border-left:3px solid var(--gold);background:rgba(10,22,64,.97);backdrop-filter:blur(12px);transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);max-width:340px;line-height:1.5}
+.toast.show{transform:translateX(0)}
+.toast.success{border-color:var(--success)}
+.toast.error{border-color:var(--danger)}
+
+/* ── LAYOUT ── */
+.admin-wrap{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--dk);flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
+.main{flex:1;margin-left:240px;padding:32px 36px;max-width:calc(100vw - 240px)}
+.logo-admin{padding:24px 20px 20px;border-bottom:1px solid var(--border);font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold);letter-spacing:3px}
+.logo-admin span{display:block;font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-top:3px}
+.nav-item{padding:13px 20px;font-size:12px;color:rgba(255,255,255,.4);cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;border-left:2px solid transparent;position:relative}
+.nav-item:hover,.nav-item.active{color:var(--w);background:rgba(43,82,204,.09);border-left-color:var(--gold);padding-left:18px}
+.nav-item .badge{position:absolute;right:14px;background:var(--danger);color:#fff;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:600}
+.nav-section{padding:14px 20px 8;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-top:10px}
+.nav-divider{height:1px;background:var(--border);margin:10px 20px}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.topbar h1{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300}
+.topbar .user-info{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:14px}
+.btn-logout{background:none;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.35);padding:8px 16px;font-size:10px;letter-spacing:1.5px;cursor:pointer;transition:all .3s;font-family:'Montserrat',sans-serif}
+.btn-logout:hover{border-color:var(--danger);color:var(--danger)}
+
+/* ── CARDS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.stat-card{background:var(--dk);border:1px solid var(--border);padding:22px;transition:border-color .3s}
+.stat-card:hover{border-color:rgba(43,82,204,.4)}
+.stat-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:8px}
+.stat-value{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--gold);line-height:1}
+.stat-sub{font-size:10px;color:var(--dim);margin-top:4px}
+
+/* ── SECTIONS ── */
+.section{display:none}.section.active{display:block}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--gold);margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+
+/* ── TABS ── */
+.tab-nav{display:flex;gap:4px;margin-bottom:24px;flex-wrap:wrap}
+.tab-btn{padding:10px 20px;background:transparent;border:1px solid var(--border);color:rgba(255,255,255,.35);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.tab-btn:hover,.tab-btn.active{background:var(--gold);color:var(--bd);border-color:var(--gold)}
+
+/* ── GRID LIST ── */
+.item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.item-card{background:var(--dk);border:1px solid var(--border);overflow:hidden;transition:border-color .3s;position:relative}
+.item-card:hover{border-color:rgba(43,82,204,.4)}
+.item-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.item-card.no-img{background:linear-gradient(135deg,var(--dm),var(--dk));display:flex;align-items:center;justify-content:center;min-height:160px;color:var(--dim);font-size:40px}
+.item-body{padding:16px}
+.item-title{font-family:'Cormorant Garamond',serif;font-size:18px;margin-bottom:4px}
+.item-sub{font-size:11px;color:var(--dim);line-height:1.6;max-height:40px;overflow:hidden}
+.item-meta{font-size:10px;color:var(--gold);margin-top:8px}
+.item-actions{position:absolute;top:10px;right:10px;display:flex;gap:6px;opacity:0;transition:opacity .3s}
+.item-card:hover .item-actions{opacity:1}
+.item-actions button{width:32px;height:32px;border-radius:4px;border:none;cursor:pointer;font-size:13px;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.btn-edit{background:rgba(43,82,204,.85);color:#fff}
+.btn-edit:hover{background:var(--bright)}
+.btn-del{background:rgba(231,76,60,.85);color:#fff}
+.btn-del:hover{background:var(--danger)}
+.btn-vis{background:rgba(39,174,96,.85);color:#fff}
+.btn-vis:hover{background:var(--success)}
+.item-toggle{position:absolute;top:10px;left:10px;opacity:0;transition:opacity .3s}
+.item-card:hover .item-toggle{opacity:1}
+
+/* ── FORMS ── */
+.form-section{background:var(--dk);border:1px solid var(--bordg);margin-bottom:20px}
+.form-section-head{padding:18px 22px;border-bottom:1px solid var(--border);font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,.8);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.form-section-head:hover{background:rgba(43,82,204,.05)}
+.form-section-head .arrow{transition:transform .3s;font-size:12px}
+.form-section-head.open .arrow{transform:rotate(180deg)}
+.form-section-body{padding:22px;display:none}
+.form-section-body.open{display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-row.full{grid-template-columns:1fr}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.form-group input,.form-group textarea,.form-group select{full-width:background:rgba(255,255,255,.04);border:1px solid var(--bordg);color:var(--w);padding:12px 14px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;outline:none;transition:border-color .3s;width:100%;background:rgba(255,255,255,.04)}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--bright)}
+.form-group textarea{resize:vertical;min-height:90px}
+.form-group select option{background:var(--dk)}
+.form-group input[type="file"]{padding:10px;border-style:dashed;background:rgba(255,255,255,.02)}
+input[type="color"]{height:44px;padding:4px;cursor:pointer}
+
+/* ── BUTTONS ── */
+.btn{display:inline-block;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:500;padding:13px 32px;cursor:pointer;border:none;transition:all .3s}
+.btn-g{background:var(--gold);color:var(--bd)}.btn-g:hover{background:var(--gl)}
+.btn-o{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.3)}.btn-o:hover{border-color:var(--gold);color:var(--gold)}
+.btn-sm{padding:9px 20px;font-size:9px}
+.btn-danger{background:transparent;border:1px solid rgba(231,76,60,.4);color:var(--danger)}.btn-danger:hover{background:rgba(231,76,60,.1)}
+.btn-success{background:transparent;border:1px solid rgba(39,174,96,.4);color:var(--success)}.btn-success:hover{background:rgba(39,174,96,.1)}
+.btn-group{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.form-actions{display:flex;gap:10px;margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
+
+/* ── IMAGE UPLOAD ── */
+.img-upload-box{border:2px dashed var(--bordg);padding:28px;text-align:center;cursor:pointer;transition:all .3s;position:relative;background:rgba(255,255,255,.02)}
+.img-upload-box:hover{border-color:var(--bright);background:rgba(43,82,204,.05)}
+.img-upload-box input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.img-upload-box .icon{font-size:32px;margin-bottom:10px;color:var(--dim)}
+.img-upload-box .text{font-size:12px;color:var(--dim)}
+.img-preview{position:relative;margin-top:12px}
+.img-preview img{max-width:100%;max-height:200px;border:1px solid var(--border);display:block}
+.img-preview .remove-img{position:absolute;top:8px;right:8px;background:rgba(231,76,60,.9);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px}
+.img-url-row{display:flex;gap:10px;margin-top:10px}
+.img-url-row input{flex:1}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{text-align:left;padding:10px 14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);border-bottom:1px solid var(--border);font-weight:400;white-space:nowrap}
+.data-table td{padding:13px 14px;border-bottom:1px solid rgba(255,255,255,.03);color:rgba(255,255,255,.6);vertical-align:middle}
+.data-table tr:hover td{background:rgba(43,82,204,.04)}
+.data-table .img-thumb{width:48px;height:36px;object-fit:cover;border-radius:2px}
+.data-table .actions{display:flex;gap:6px}
+.data-table select{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--w);padding:5px 8px;font-size:10px;cursor:pointer}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--dk);border:1px solid var(--bordg);width:96vw;max-width:700px;max-height:90vh;overflow-y:auto;position:relative}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold)}
+.modal-close{background:none;border:none;color:var(--dim);font-size:20px;cursor:pointer;transition:color .3s}.modal-close:hover{color:var(--w)}
+.modal-body{padding:24px}
+.modal-foot{padding:18px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+
+/* ── FILTER BAR ── */
+.filter-bar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.filter-bar select,.filter-bar input,.filter-bar button{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--w);padding:9px 14px;font-family:'Montserrat',sans-serif;font-size:11px;outline:none;cursor:pointer}
+.filter-bar select option{background:var(--dk)}
+.filter-bar input[type="text"]{flex:1;min-width:200px}
+.filter-bar input[type="date"]{width:auto}
+
+/* ── DRAG & DROP ── */
+.drag-zone{border:2px dashed var(--border);padding:40px;text-align:center;transition:all .3s;margin-bottom:20px}
+.drag-zone.drag-over{border-color:var(--gold);background:rgba(201,169,110,.05)}
+.drag-zone .icon{font-size:40px;margin-bottom:12px;color:var(--dim)}
+.drag-zone p{font-size:13px;color:var(--dim)}
+.drag-zone input{display:none}
+
+/* ── GALLERY GRID ── */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.gallery-item{position:relative;aspect-ratio:1;overflow:hidden;cursor:move;border:1px solid var(--border)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-item .overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;gap:10px;opacity:0;transition:opacity .3s}
+.gallery-item:hover .overlay{opacity:1}
+.gallery-item .overlay button{width:36px;height:36px;border-radius:4px;border:none;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
+
+/* ── LOGIN ── */
+.login-screen{position:fixed;inset:0;background:var(--bd);z-index:3000;display:flex;align-items:center;justify-content:center}
+.login-box{background:var(--dk);border:1px solid var(--bordg);padding:52px;width:380px;text-align:center}
+.login-box h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--gold);margin-bottom:6px;letter-spacing:4px}
+.login-box p{font-size:10px;color:var(--dim);margin-bottom:32px;letter-spacing:2px}
+.login-box input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--bordg);color:var(--w);padding:14px 16px;font-family:'Montserrat',sans-serif;font-size:15px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:16px}
+.login-box input:focus{border-color:var(--bright)}
+.login-box button{width:100%;background:var(--gold);color:var(--bd);border:none;padding:14px;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all .3s}
+.login-box button:hover{background:var(--gl)}
+.login-box .hint{font-size:10px;color:rgba(255,255,255,.2);margin-top:20px}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--dim)}
+.empty-state .icon{font-size:48px;margin-bottom:16px;opacity:.5}
+.empty-state p{font-size:13px;margin-bottom:20px}
+
+/* ── LOADING ── */
+.loading{text-align:center;padding:40px;color:var(--dim);font-size:13px}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin-right:10px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── TOGGLE SWITCH ── */
+.toggle{position:relative;width:42px;height:22px;display:inline-block}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .slider{position:absolute;cursor:pointer;inset:0;background:rgba(255,255,255,.1);transition:.3s;border-radius:22px}
+.toggle .slider:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:white;transition:.3s;border-radius:50%}
+.toggle input:checked + .slider{background:var(--success)}
+.toggle input:checked + .slider:before{transform:translateX(20px)}
+
+/* ── MISC ── */
+.badge{display:inline-block;padding:3px 9px;font-size:9px;letter-spacing:1px;text-transform:uppercase;font-weight:500;border-radius:2px}
+.badge-ativo{background:rgba(39,174,96,.12);color:#27AE60}
+.badge-inativo{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3)}
+.badge-novo{background:rgba(201,169,110,.12);color:var(--gold)}
+.badge-lido{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3)}
+.text-gold{color:var(--gold)}
+.text-dim{color:var(--dim)}
+.text-danger{color:var(--danger)}
+.text-success{color:var(--success)}
+.mt{margin-top:20px}
+.mb{margin-bottom:20px}
+.flex{display:flex;gap:10px;align-items:center}
+.flex-between{justify-content:space-between}
+.w-full{width:100%}
+hr.sep{border:none;border-top:1px solid var(--border);margin:20px 0}
+.color-row{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.color-row input[type="color"]{width:50px;height:40px;padding:2px;flex-shrink:0}
+.color-row span{flex:1}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h2>ARELLA</h2>
+    <p>PAINEL ADMINISTRATIVO</p>
+    <input type="password" id="loginPwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
+    <button onclick="adminLogin()">Entrar</button>
+    <p class="hint">Acesso restrito à equipe Arella</p>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="admin-wrap" id="adminWrap" style="display:none">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo-admin">ARELLA<span>Painel v2.0</span></div>
+
+    <div class="nav-section">Menu</div>
+    <div class="nav-item active" onclick="showSection('dashboard',this)">📊 Dashboard</div>
+    <div class="nav-item" onclick="showSection('slides',this)">🎠 Slides</div>
+    <div class="nav-item" onclick="showSection('servicos',this)">✨ Serviços</div>
+    <div class="nav-item" onclick="showSection('equipe',this)">👥 Equipe</div>
+    <div class="nav-item" onclick="showSection('galeria',this)">🖼️ Galeria</div>
+    <div class="nav-item" onclick="showSection('depoimentos',this)">💬 Depoimentos</div>
+    <div class="nav-item" onclick="showSection('instagram',this)">📸 Instagram</div>
+
+    <div class="nav-divider"></div>
+    <div class="nav-section">Sistema</div>
+    <div class="nav-item" onclick="showSection('agendamentos',this)">📅 Agendamentos <span class="badge" id="badge-pend" style="display:none">0</span></div>
+    <div class="nav-item" onclick="showSection('contatos',this)">📩 Contatos <span class="badge" id="badge-cont" style="display:none">0</span></div>
+    <div class="nav-item" onclick="showSection('config',this)">⚙️ Configurações</div>
+    <div class="nav-item" onclick="showSection('seo',this)">🔍 SEO</div>
+    <div class="nav-item" onclick="showSection('email',this)">📧 Email / SMTP</div>
+    <div class="nav-item" onclick="showSection('corres',this)">🎨 Cores & Logo</div>
+
+    <div style="margin-top:auto;padding:20px;border-top:1px solid var(--border)">
+      <button class="btn-logout" onclick="adminLogout()">Sair</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div class="section active" id="sec-dashboard">
+      <div class="topbar">
+        <h1>Dashboard</h1>
+        <div class="user-info">
+          <span id="welcomeMsg">Bem-vindo!</span>
+          <button class="btn-logout" onclick="adminLogout()">Sair</button>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Agendamentos Hoje</div><div class="stat-value" id="st-hoje">—</div></div>
+        <div class="stat-card"><div class="stat-label">Este Mês</div><div class="stat-value" id="st-mes">—</div></div>
+        <div class="stat-card"><div class="stat-label">Pendentes</div><div class="stat-value" id="st-pend">—</div></div>
+        <div class="stat-card"><div class="stat-label">Contatos Não Lidos</div><div class="stat-value" id="st-cont">—</div></div>
+      </div>
+
+      <div class="section-title">Visitar Site</div>
+      <p style="color:var(--dim);margin-bottom:16px;font-size:13px">Acesse o site para ver as alterações em tempo real.</p>
+      <a href="/" target="_blank" class="btn btn-g">🌐 Abrir Site</a>
+
+      <div class="section-title mt">Últimos Agendamentos</div>
+      <div id="dash-age"></div>
+
+      <div class="section-title mt">Mensagens Recentes</div>
+      <div id="dash-cont"></div>
+    </div>
+
+    <!-- SLIDES -->
+    <div class="section" id="sec-slides">
+      <div class="topbar"><h1>Slides</h1><button class="btn btn-g" onclick="openModal('modal-slide')">+ Novo Slide</button></div>
+      <div class="item-grid" id="slides-grid"></div>
+    </div>
+
+    <!-- SERVIÇOS -->
+    <div class="section" id="sec-servicos">
+      <div class="topbar"><h1>Serviços</h1><button class="btn btn-g" onclick="openModal('modal-servico')">+ Novo Serviço</button></div>
+      <div class="item-grid" id="servicos-grid"></div>
+    </div>
+
+    <!-- EQUIPE -->
+    <div class="section" id="sec-equipe">
+      <div class="topbar"><h1>Equipe</h1><button class="btn btn-g" onclick="openModal('modal-equipe')">+ Novo Membro</button></div>
+      <div class="filter-bar">
+        <select id="filter-equipe-cat" onchange="loadEquipe()"><option value="">Todas categorias</option><option value="est">Esteticistas</option><option value="maq">Maquiadoras</option><option value="nail">Nail Artists</option></select>
+      </div>
+      <div class="item-grid" id="equipe-grid"></div>
+    </div>
+
+    <!-- GALERIA -->
+    <div class="section" id="sec-galeria">
+      <div class="topbar"><h1>Galeria</h1><button class="btn btn-g" onclick="openModal('modal-galeria')">+ Adicionar Imagem</button></div>
+      <div class="drag-zone" id="drop-galeria">
+        <input type="file" accept="image/*" multiple onchange="handleDropGaleria(this.files)">
+        <div class="icon">🖼️</div>
+        <p>Arraste imagens aqui ou clique para selecionar</p>
+      </div>
+      <div class="gallery-grid" id="galeria-grid"></div>
+    </div>
+
+    <!-- DEPOIMENTOS -->
+    <div class="section" id="sec-depoimentos">
+      <div class="topbar"><h1>Depoimentos</h1><button class="btn btn-g" onclick="openModal('modal-depoimento')">+ Novo Depoimento</button></div>
+      <div class="item-grid" id="depoimentos-grid"></div>
+    </div>
+
+    <!-- INSTAGRAM -->
+    <div class="section" id="sec-instagram">
+      <div class="topbar"><h1>Instagram</h1><button class="btn btn-g" onclick="openModal('modal-instagram')">+ Adicionar Foto</button></div>
+      <div class="gallery-grid" id="instagram-grid"></div>
+    </div>
+
+    <!-- AGENDAMENTOS -->
+    <div class="section" id="sec-agendamentos">
+      <div class="topbar"><h1>Agendamentos</h1></div>
+      <div class="filter-bar">
+        <input type="date" id="filtro-age-data" onchange="loadAgendamentos()">
+        <select id="filtro-age-status" onchange="loadAgendamentos()"><option value="">Todos status</option><option value="pendente">Pendente</option><option value="confirmado">Confirmado</option><option value="concluido">Concluído</option><option value="cancelado">Cancelado</option></select>
+        <button class="btn btn-o btn-sm" onclick="exportCSV()">⬇ Exportar</button>
+      </div>
+      <div id="agendamentos-table"></div>
+    </div>
+
+    <!-- CONTATOS -->
+    <div class="section" id="sec-contatos">
+      <div class="topbar"><h1>Contatos</h1></div>
+      <div id="contatos-table"></div>
+    </div>
+
+    <!-- CONFIG -->
+    <div class="section" id="sec-config">
+      <div class="topbar"><h1>Configurações</h1></div>
+
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Informações de Contato</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <div class="form-row"><div class="form-group"><label>WhatsApp (somente números)</label><input type="text" id="cfg-whatsapp" placeholder="5531999999999"></div><div class="form-group"><label>Instagram URL</label><input type="text" id="cfg-instagram" placeholder="https://instagram.com/espacoarella"></div></div>
+          <div class="form-row full"><div class="form-group"><label>Endereço</label><textarea id="cfg-endereco" style="min-height:70px"></textarea></div></div>
+          <div class="form-row full"><div class="form-group"><label>Horários de Funcionamento</label><textarea id="cfg-horarios" style="min-height:70px"></textarea></div></div>
+          <div class="form-actions"><button class="btn btn-g" onclick="saveConfig()">Salvar</button></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Sobre / Texto Principal</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <div class="form-row full"><div class="form-group"><label>Texto Sobre Nós</label><textarea id="cfg-sobre" style="min-height:100px"></textarea></div></div>
+          <div class="form-row"><div class="form-group"><label>Anos de experiência (stats)</label><input type="text" id="cfg-anos"></div><div class="form-group"><label>Clientes (stats)</label><input type="text" id="cfg-clientes"></div><div class="form-group"><label>Serviços (stats)</label><input type="text" id="cfg-servicos"></div></div>
+          <div class="form-actions"><button class="btn btn-g" onclick="saveConfig()">Salvar</button></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Especialista</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <div class="form-row"><div class="form-group"><label>Nome</label><input type="text" id="cfg-esp-nome"></div><div class="form-group"><label>Cargo</label><input type="text" id="cfg-esp-cargo"></div></div>
+          <div class="form-row full"><div class="form-group"><label>Citação</label><textarea id="cfg-esp-citacao" style="min-height:60px"></textarea></div></div>
+          <div class="form-row full"><div class="form-group"><label>Credenciais</label><textarea id="cfg-esp-creds" style="min-height:80px"></textarea></div></div>
+          <div class="form-actions"><button class="btn btn-g" onclick="saveConfig()">Salvar</button></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Senha do Admin</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <div class="form-row"><div class="form-group"><label>Nova Senha</label><input type="password" id="cfg-senha"></div><div class="form-group"><label>Confirmar Senha</label><input type="password" id="cfg-senha2"></div></div>
+          <div class="form-actions"><button class="btn btn-danger" onclick="changePassword()">Alterar Senha</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="section" id="sec-seo">
+      <div class="topbar"><h1>SEO</h1></div>
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Meta Tags — Página Inicial</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <div class="form-row full"><div class="form-group"><label>Title (SEO)</label><input type="text" id="seo-titulo"></div></div>
+          <div class="form-row full"><div class="form-group"><label>Description</label><textarea id="seo-desc" style="min-height:80px"></textarea></div></div>
+          <div class="form-row full"><div class="form-group"><label>Keywords (separadas por vírgula)</label><input type="text" id="seo-keywords"></div></div>
+          <div class="form-row full"><div class="form-group"><label>OG Image URL</label><input type="text" id="seo-og"></div></div>
+          <div class="form-actions"><button class="btn btn-g" onclick="saveSeo()">Salvar SEO</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="section" id="sec-email">
+      <div class="topbar"><h1>Email / SMTP</h1></div>
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Configuração SMTP</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <p style="font-size:12px;color:var(--dim);margin-bottom:20px;line-height:1.8">Configure um email para receber notificações e enviar confirmações de agendamento. Para Gmail, ative verificação 2 fatores e gere uma <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color:var(--gold)">senha de app</a>.</p>
+          <div class="form-row"><div class="form-group"><label>Email para receber mensagens</label><input type="email" id="smtp-contato"></div><div class="form-group"><label>Email (usuário SMTP)</label><input type="email" id="smtp-user"></div></div>
+          <div class="form-row"><div class="form-group"><label>SMTP Host</label><input type="text" id="smtp-host" placeholder="smtp.gmail.com"></div><div class="form-group"><label>SMTP Port</label><input type="text" id="smtp-port" placeholder="587"></div></div>
+          <div class="form-row full"><div class="form-group"><label>Senha / App Password</label><input type="password" id="smtp-pass"></div></div>
+          <div class="form-actions"><button class="btn btn-g" onclick="saveSmtp()">Salvar</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORES & LOGO -->
+    <div class="section" id="sec-corres">
+      <div class="topbar"><h1>Cores & Logo</h1></div>
+
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Logo do Site</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <div class="form-group"><label>Logo (upload ou URL)</label></div>
+          <div class="img-upload-box" id="logo-upload-box">
+            <input type="file" accept="image/*" onchange="handleLogoUpload(this)">
+            <div class="icon">🏠</div>
+            <div class="text">Clique ou arraste para trocar o logo</div>
+          </div>
+          <div id="logo-preview"></div>
+          <div class="img-url-row">
+            <input type="text" id="logo-url" placeholder="Ou cole uma URL da imagem">
+            <button class="btn btn-o btn-sm" onclick="setLogoUrl()">Usar URL</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Imagem "Sobre" (Seção Sobre)</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <div class="img-upload-box" onclick="document.getElementById('sobre-img-input').click()">
+            <input type="file" accept="image/*" id="sobre-img-input" onchange="handleSobreImg(this)">
+            <div class="icon">🖼️</div>
+            <div class="text">Imagem da seção Sobre</div>
+          </div>
+          <div id="sobre-img-preview"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Imagem Especialista</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <div class="img-upload-box" onclick="document.getElementById('esp-img-input').click()">
+            <input type="file" accept="image/*" id="esp-img-input" onchange="handleEspImg(this)">
+            <div class="icon">👩‍⚕️</div>
+            <div class="text">Foto da especialista</div>
+          </div>
+          <div id="esp-img-preview"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Cores do Site</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <p style="font-size:12px;color:var(--dim);margin-bottom:16px">As cores são salvas como variáveis CSS e podem ser usadas futuramente para personalizar o tema.</p>
+          <div class="color-row"><input type="color" id="cor-primaria" value="#C9A96E"><span>Cor Primária (dourado)</span></div>
+          <div class="color-row"><input type="color" id="cor-secundaria" value="#050D28"><span>Cor Secundária (azul escuro)</span></div>
+          <div class="color-row"><input type="color" id="cor-texto" value="#FFFFFF"><span>Cor do Texto</span></div>
+          <div class="form-actions"><button class="btn btn-g" onclick="saveColors()">Salvar Cores</button></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL: SLIDE -->
+<div class="modal-overlay" id="modal-slide">
+  <div class="modal">
+    <div class="modal-head"><h3 id="modal-slide-title">Novo Slide</h3><button class="modal-close" onclick="closeModal('modal-slide')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="slide-id">
+      <div class="form-group"><label>Título Principal</label><input type="text" id="slide-titulo" placeholder="Bem-vinda ao"></div>
+      <div class="form-group"><label>Subtítulo (use \n para quebra de linha)</label><textarea id="slide-subtitulo" style="min-height:70px" placeholder="Arella\nBeauty\nCenter"></textarea></div>
+      <div class="form-group"><label>Imagem de Fundo (URL)</label><input type="text" id="slide-img" placeholder="https://..."></div>
+      <div class="img-upload-box" onclick="document.getElementById('slide-img-file').click()">
+        <input type="file" accept="image/*" id="slide-img-file" onchange="handleSlideImg(this)">
+        <div class="icon">📷</div>
+        <div class="text">Upload de imagem (opcional)</div>
+      </div>
+      <div class="form-row"><div class="form-group"><label>Texto do Botão</label><input type="text" id="slide-btn-text" placeholder="Agendar Agora"></div><div class="form-group"><label>Link do Botão</label><input type="text" id="slide-btn-link" placeholder="#age"></div></div>
+      <div class="form-group"><label>Posição / Ordem</label><input type="number" id="slide-pos" value="0"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="closeModal('modal-slide')">Cancelar</button>
+      <button class="btn btn-g" onclick="saveSlide()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SERVIÇO -->
+<div class="modal-overlay" id="modal-servico">
+  <div class="modal">
+    <div class="modal-head"><h3 id="modal-servico-title">Novo Serviço</h3><button class="modal-close" onclick="closeModal('modal-servico')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="servico-id">
+      <div class="form-group"><label>Nome do Serviço *</label><input type="text" id="servico-nome" placeholder="Limpeza de Pele"></div>
+      <div class="form-group"><label>Descrição</label><textarea id="servico-desc" placeholder="Descrição do serviço..."></textarea></div>
+      <div class="form-group"><label>Imagem (URL)</label><input type="text" id="servico-img" placeholder="https://..."></div>
+      <div class="img-upload-box" onclick="document.getElementById('servico-img-file').click()">
+        <input type="file" accept="image/*" id="servico-img-file" onchange="handleServicoImg(this)">
+        <div class="icon">📷</div>
+        <div class="text">Upload de imagem (opcional)</div>
+      </div>
+      <div class="form-group"><label>Posição / Ordem</label><input type="number" id="servico-pos" value="0"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="closeModal('modal-servico')">Cancelar</button>
+      <button class="btn btn-g" onclick="saveServico()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: EQUIPE -->
+<div class="modal-overlay" id="modal-equipe">
+  <div class="modal">
+    <div class="modal-head"><h3 id="modal-equipe-title">Novo Membro</h3><button class="modal-close" onclick="closeModal('modal-equipe')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="equipe-id">
+      <div class="form-row"><div class="form-group"><label>Nome *</label><input type="text" id="equipe-nome"></div><div class="form-group"><label>Cargo *</label><input type="text" id="equipe-cargo"></div></div>
+      <div class="form-group"><label>Categoria</label><select id="equipe-cat"><option value="est">Esteticista</option><option value="maq">Maquiadora</option><option value="nail">Nail Artist</option></select></div>
+      <div class="form-group"><label>Foto (URL)</label><input type="text" id="equipe-foto" placeholder="https://..."></div>
+      <div class="img-upload-box" onclick="document.getElementById('equipe-foto-file').click()">
+        <input type="file" accept="image/*" id="equipe-foto-file" onchange="handleEquipeFoto(this)">
+        <div class="icon">👤</div>
+        <div class="text">Upload de foto (opcional)</div>
+      </div>
+      <div id="equipe-foto-preview"></div>
+      <div class="form-row"><div class="form-group"><label>Instagram URL</label><input type="text" id="equipe-ig"></div><div class="form-group"><label>WhatsApp</label><input type="text" id="equipe-wa"></div></div>
+      <div class="form-group"><label>Posição / Ordem</label><input type="number" id="equipe-pos" value="0"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="closeModal('modal-equipe')">Cancelar</button>
+      <button class="btn btn-g" onclick="saveEquipe()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: GALERIA -->
+<div class="modal-overlay" id="modal-galeria">
+  <div class="modal">
+    <div class="modal-head"><h3>Adicionar à Galeria</h3><button class="modal-close" onclick="closeModal('modal-galeria')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Imagem (URL)</label><input type="text" id="galeria-url" placeholder="https://..."></div>
+      <div class="img-upload-box" onclick="document.getElementById('galeria-file').click()">
+        <input type="file" accept="image/*" id="galeria-file" onchange="handleGaleriaUpload(this)">
+        <div class="icon">🖼️</div>
+        <div class="text">Upload de imagem</div>
+      </div>
+      <div id="galeria-preview"></div>
+      <div class="form-group" style="margin-top:16px"><label>Posição / Ordem</label><input type="number" id="galeria-pos" value="0"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="closeModal('modal-galeria')">Cancelar</button>
+      <button class="btn btn-g" onclick="saveGaleria()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: DEPOIMENTO -->
+<div class="modal-overlay" id="modal-depoimento">
+  <div class="modal">
+    <div class="modal-head"><h3 id="modal-depoimento-title">Novo Depoimento</h3><button class="modal-close" onclick="closeModal('modal-depoimento')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="depoimento-id">
+      <div class="form-group"><label>Texto do Depoimento *</label><textarea id="depoimento-texto" style="min-height:100px" placeholder="Depoimento do cliente..."></textarea></div>
+      <div class="form-row"><div class="form-group"><label>Nome *</label><input type="text" id="depoimento-nome"></div><div class="form-group"><label>Função/Categoria</label><input type="text" id="depoimento-funcao" placeholder="Cliente"></div></div>
+      <div class="form-group"><label>Tempo de Cliente</label><input type="text" id="depoimento-tempo" placeholder="Cliente há 3 anos"></div>
+      <div class="form-group"><label>Posição / Ordem</label><input type="number" id="depoimento-pos" value="0"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="closeModal('modal-depoimento')">Cancelar</button>
+      <button class="btn btn-g" onclick="saveDepoimento()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: INSTAGRAM -->
+<div class="modal-overlay" id="modal-instagram">
+  <div class="modal">
+    <div class="modal-head"><h3>Adicionar Foto Instagram</h3><button class="modal-close" onclick="closeModal('modal-instagram')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Imagem (URL)</label><input type="text" id="insta-url" placeholder="https://..."></div>
+      <div class="img-upload-box" onclick="document.getElementById('insta-file').click()">
+        <input type="file" accept="image/*" id="insta-file" onchange="handleInstaUpload(this)">
+        <div class="icon">📸</div>
+        <div class="text">Upload de imagem</div>
+      </div>
+      <div id="insta-preview"></div>
+      <div class="form-group" style="margin-top:16px"><label>Posição / Ordem</label><input type="number" id="insta-pos" value="0"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="closeModal('modal-instagram')">Cancelar</button>
+      <button class="btn btn-g" onclick="saveInstagram()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ──
+let admToken = null;
+let editingItem = {};
+
+// ── INIT ──
+window.addEventListener('load', () => {
+  admToken = sessionStorage.getItem('adm_token');
+  if (admToken) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminWrap').style.display = 'flex';
+    initAdmin();
+  }
+});
+
+// ── AUTH ──
+async function adminLogin() {
+  const pwd = document.getElementById('loginPwd').value;
+  if (!pwd) { toast('Digite a senha.', 'error'); return; }
+  try {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ senha: pwd })
+    }).then(r => r.json());
+    if (res.ok) {
+      admToken = res.token;
+      sessionStorage.setItem('adm_token', admToken);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminWrap').style.display = 'flex';
+      initAdmin();
+    } else {
+      toast('Senha incorreta.', 'error');
+    }
+  } catch (e) { toast('Erro de conexão.', 'error'); }
+}
+
+function adminLogout() {
+  admToken = null;
+  sessionStorage.removeItem('adm_token');
+  location.reload();
+}
+
+function authHeaders() {
+  return { 'x-admin-token': admToken, 'Content-Type': 'application/json' };
+}
+
+// ── INIT ADMIN ──
+async function initAdmin() {
+  loadStats();
+  loadDashboard();
+  loadSlides();
+  loadServicos();
+  loadEquipe();
+  loadGaleria();
+  loadDepoimentos();
+  loadInstagram();
+  loadConfig();
+}
+
+// ── SECTIONS ──
+function showSection(name, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+  if (name === 'agendamentos') loadAgendamentos();
+  if (name === 'contatos') loadContatos();
+}
+
+// ── TOAST ──
+function toast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + type + ' show';
+  setTimeout(() => el.classList.remove('show'), 4000);
+}
+
+// ── STATS ──
+async function loadStats() {
+  try {
+    const s = await fetch('/api/stats', { headers: { 'x-admin-token': admToken } }).then(r => r.json());
+    document.getElementById('st-hoje').textContent = s.hoje ?? 0;
+    document.getElementById('st-mes').textContent = s.mes ?? 0;
+    document.getElementById('st-pend').textContent = s.pendentes ?? 0;
+    document.getElementById('st-cont').textContent = s.contatos_nao_lidos ?? 0;
+    const bp = document.getElementById('badge-pend');
+    const bc = document.getElementById('badge-cont');
+    if (s.pendentes > 0) { bp.textContent = s.pendentes; bp.style.display = 'inline'; }
+    else bp.style.display = 'none';
+    if (s.contatos_nao_lidos > 0) { bc.textContent = s.contatos_nao_lidos; bc.style.display = 'inline'; }
+    else bc.style.display = 'none';
+  } catch (e) { console.error(e); }
+}
+
+// ── DASHBOARD ──
+async function loadDashboard() {
+  // Últimos agendamentos
+  try {
+    const age = await fetch('/api/agendamentos', { headers: { 'x-admin-token': admToken } }).then(r => r.json());
+    const el = document.getElementById('dash-age');
+    if (!age.length) { el.innerHTML = '<p class="text-dim">Nenhum agendamento.</p>'; }
+    else {
+      el.innerHTML = '<table class="data-table"><tr><th>Nome</th><th>Serviço</th><th>Data</th><th>Status</th></tr>' +
+        age.slice(0, 5).map(a => `<tr><td>${a.nome}</td><td>${a.servico}</td><td>${new Date(a.data + 'T12:00:00').toLocaleDateString('pt-BR')}</td><td><span class="badge badge-${a.status === 'pendente' ? 'novo' : a.status === 'confirmado' ? 'ativo' : 'inativo'}">${a.status}</span></td></tr>`).join('') + '</table>';
+    }
+  } catch (e) { }
+  // Últimos contatos
+  try {
+    const cont = await fetch('/api/contatos', { headers: { 'x-admin-token': admToken } }).then(r => r.json());
+    const el = document.getElementById('dash-cont');
+    if (!cont.length) { el.innerHTML = '<p class="text-dim">Nenhuma mensagem.</p>'; }
+    else {
+      el.innerHTML = '<table class="data-table"><tr><th>Nome</th><th>Email</th><th>Mensagem</th><th>Status</th></tr>' +
+        cont.slice(0, 5).map(c => `<tr onclick="markContRead(${c.id})" style="cursor:pointer"><td>${c.nome}</td><td>${c.email}</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.mensagem}</td><td><span class="badge ${c.lido ? 'badge-lido' : 'badge-novo'}">${c.lido ? 'Lido' : 'Novo'}</span></td></tr>`).join('') + '</table>';
+    }
+  } catch (e) { }
+}
+
+// ── MODALS ──
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); resetModalForms(); }
+function resetModalForms() {
+  ['slide', 'servico', 'equipe', 'depoimento'].forEach(t => {
+    document.getElementById(t + '-id') && (document.getElementById(t + '-id').value = '');
+  });
+}
+function toggleSection(el) { el.classList.toggle('open'); el.nextElementSibling.classList.toggle('open'); }
+
+// ── UPLOAD HELPERS ──
+async function uploadFile(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch('/api/upload', {
+    method: 'POST',
+    headers: { 'x-admin-token': admToken },
+    body: formData
+  }).then(r => r.json());
+  if (res.url) return res.url;
+  throw new Error(res.erro || 'Upload falhou');
+}
+
+// ── SLIDES ──
+async function loadSlides() {
+  const data = await fetch('/api/admin/slides', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const grid = document.getElementById('slides-grid');
+  if (!data.length) { grid.innerHTML = '<div class="empty-state"><div class="icon">🎠</div><p>Nenhum slide cadastrado</p></div>'; return; }
+  grid.innerHTML = data.map(s => `
+    <div class="item-card">
+      <div class="item-toggle"><label class="toggle"><input type="checkbox" ${s.ativo ? 'checked' : ''} onchange="toggleAtivo('slides',${s.id},this.checked)"><span class="slider"></span></label></div>
+      <div class="item-actions">
+        <button class="btn-edit" onclick="editSlide(${s.id})">✎</button>
+        <button class="btn-del" onclick="deleteItem('slides',${s.id})">✕</button>
+      </div>
+      ${s.imagem_url ? `<img src="${s.imagem_url}" alt="${s.titulo}">` : '<div class="no-img">🎠</div>'}
+      <div class="item-body">
+        <div class="item-title">${s.titulo || 'Sem título'}</div>
+        <div class="item-sub">${(s.subtitulo || '').replace(/\n/g, ' / ')}</div>
+        <div class="item-meta">Ordem: ${s.posicao}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function editSlide(id) {
+  const data = await fetch('/api/admin/slides', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const s = data.find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('slide-id').value = s.id;
+  document.getElementById('slide-titulo').value = s.titulo || '';
+  document.getElementById('slide-subtitulo').value = s.subtitulo || '';
+  document.getElementById('slide-img').value = s.imagem_url || '';
+  document.getElementById('slide-btn-text').value = s.texto_botao || '';
+  document.getElementById('slide-btn-link').value = s.link_botao || '';
+  document.getElementById('slide-pos').value = s.posicao;
+  document.getElementById('modal-slide-title').textContent = 'Editar Slide';
+  openModal('modal-slide');
+}
+
+async function saveSlide() {
+  const id = document.getElementById('slide-id').value;
+  const body = {
+    titulo: document.getElementById('slide-titulo').value,
+    subtitulo: document.getElementById('slide-subtitulo').value,
+    imagem_url: document.getElementById('slide-img').value,
+    texto_botao: document.getElementById('slide-btn-text').value,
+    link_botao: document.getElementById('slide-btn-link').value,
+    posicao: parseInt(document.getElementById('slide-pos').value) || 0,
+  };
+  if (!body.titulo) { toast('Título é obrigatório.', 'error'); return; }
+  try {
+    if (id) await fetch(`/api/admin/slides/${id}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify(body) });
+    else await fetch('/api/admin/slides', { method: 'POST', headers: authHeaders(), body: JSON.stringify(body) });
+    toast(id ? 'Slide atualizado!' : 'Slide criado!');
+    closeModal('modal-slide');
+    loadSlides();
+  } catch (e) { toast('Erro ao salvar.', 'error'); }
+}
+
+async function handleSlideImg(input) {
+  if (!input.files[0]) return;
+  try {
+    const url = await uploadFile(input.files[0]);
+    document.getElementById('slide-img').value = url;
+    toast('Imagem carregada! URL preenchida.', 'success');
+  } catch (e) { toast('Erro no upload.', 'error'); }
+}
+
+// ── SERVIÇOS ──
+async function loadServicos() {
+  const data = await fetch('/api/admin/servicos', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const grid = document.getElementById('servicos-grid');
+  if (!data.length) { grid.innerHTML = '<div class="empty-state"><div class="icon">✨</div><p>Nenhum serviço cadastrado</p></div>'; return; }
+  grid.innerHTML = data.map(s => `
+    <div class="item-card">
+      <div class="item-toggle"><label class="toggle"><input type="checkbox" ${s.ativo ? 'checked' : ''} onchange="toggleAtivo('servicos',${s.id},this.checked)"><span class="slider"></span></label></div>
+      <div class="item-actions">
+        <button class="btn-edit" onclick="editServico(${s.id})">✎</button>
+        <button class="btn-del" onclick="deleteItem('servicos',${s.id})">✕</button>
+      </div>
+      ${s.imagem_url ? `<img src="${s.imagem_url}" alt="${s.nome}">` : '<div class="no-img">✨</div>'}
+      <div class="item-body">
+        <div class="item-title">${s.nome}</div>
+        <div class="item-sub">${s.descricao || ''}</div>
+        <div class="item-meta">Ordem: ${s.posicao}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function editServico(id) {
+  const data = await fetch('/api/admin/servicos', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const s = data.find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('servico-id').value = s.id;
+  document.getElementById('servico-nome').value = s.nome || '';
+  document.getElementById('servico-desc').value = s.descricao || '';
+  document.getElementById('servico-img').value = s.imagem_url || '';
+  document.getElementById('servico-pos').value = s.posicao;
+  document.getElementById('modal-servico-title').textContent = 'Editar Serviço';
+  openModal('modal-servico');
+}
+
+async function saveServico() {
+  const id = document.getElementById('servico-id').value;
+  const body = {
+    nome: document.getElementById('servico-nome').value,
+    descricao: document.getElementById('servico-desc').value,
+    imagem_url: document.getElementById('servico-img').value,
+    posicao: parseInt(document.getElementById('servico-pos').value) || 0,
+  };
+  if (!body.nome) { toast('Nome é obrigatório.', 'error'); return; }
+  try {
+    if (id) await fetch(`/api/admin/servicos/${id}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify(body) });
+    else await fetch('/api/admin/servicos', { method: 'POST', headers: authHeaders(), body: JSON.stringify(body) });
+    toast(id ? 'Serviço atualizado!' : 'Serviço criado!');
+    closeModal('modal-servico');
+    loadServicos();
+  } catch (e) { toast('Erro ao salvar.', 'error'); }
+}
+
+async function handleServicoImg(input) {
+  if (!input.files[0]) return;
+  try {
+    const url = await uploadFile(input.files[0]);
+    document.getElementById('servico-img').value = url;
+    toast('Imagem carregada!', 'success');
+  } catch (e) { toast('Erro no upload.', 'error'); }
+}
+
+// ── EQUIPE ──
+async function loadEquipe() {
+  const cat = document.getElementById('filter-equipe-cat')?.value || '';
+  const data = await fetch('/api/admin/equipe', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const filtered = cat ? data.filter(e => e.categoria === cat) : data;
+  const grid = document.getElementById('equipe-grid');
+  if (!filtered.length) { grid.innerHTML = '<div class="empty-state"><div class="icon">👥</div><p>Nenhum membro cadastrado</p></div>'; return; }
+  grid.innerHTML = filtered.map(e => `
+    <div class="item-card">
+      <div class="item-toggle"><label class="toggle"><input type="checkbox" ${e.ativo ? 'checked' : ''} onchange="toggleAtivo('equipe',${e.id},this.checked)"><span class="slider"></span></label></div>
+      <div class="item-actions">
+        <button class="btn-edit" onclick="editEquipe(${e.id})">✎</button>
+        <button class="btn-del" onclick="deleteItem('equipe',${e.id})">✕</button>
+      </div>
+      ${e.foto_url ? `<img src="${e.foto_url}" alt="${e.nome}">` : '<div class="no-img">👤</div>'}
+      <div class="item-body">
+        <div class="item-title">${e.nome}</div>
+        <div class="item-sub">${e.cargo || ''}</div>
+        <div class="item-meta">${e.categoria?.toUpperCase()} · Ordem: ${e.posicao}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function editEquipe(id) {
+  const data = await fetch('/api/admin/equipe', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const e = data.find(x => x.id === id);
+  if (!e) return;
+  document.getElementById('equipe-id').value = e.id;
+  document.getElementById('equipe-nome').value = e.nome || '';
+  document.getElementById('equipe-cargo').value = e.cargo || '';
+  document.getElementById('equipe-cat').value = e.categoria || 'est';
+  document.getElementById('equipe-foto').value = e.foto_url || '';
+  document.getElementById('equipe-ig').value = e.instagram || '';
+  document.getElementById('equipe-wa').value = e.whatsapp || '';
+  document.getElementById('equipe-pos').value = e.posicao;
+  if (e.foto_url) document.getElementById('equipe-foto-preview').innerHTML = `<img src="${e.foto_url}" style="max-width:120px;margin-top:8px;border-radius:4px">`;
+  document.getElementById('modal-equipe-title').textContent = 'Editar Membro';
+  openModal('modal-equipe');
+}
+
+async function saveEquipe() {
+  const id = document.getElementById('equipe-id').value;
+  const body = {
+    nome: document.getElementById('equipe-nome').value,
+    cargo: document.getElementById('equipe-cargo').value,
+    categoria: document.getElementById('equipe-cat').value,
+    foto_url: document.getElementById('equipe-foto').value,
+    instagram: document.getElementById('equipe-ig').value,
+    whatsapp: document.getElementById('equipe-wa').value,
+    posicao: parseInt(document.getElementById('equipe-pos').value) || 0,
+  };
+  if (!body.nome) { toast('Nome é obrigatório.', 'error'); return; }
+  try {
+    if (id) await fetch(`/api/admin/equipe/${id}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify(body) });
+    else await fetch('/api/admin/equipe', { method: 'POST', headers: authHeaders(), body: JSON.stringify(body) });
+    toast(id ? 'Membro atualizado!' : 'Membro adicionado!');
+    closeModal('modal-equipe');
+    loadEquipe();
+  } catch (e) { toast('Erro ao salvar.', 'error'); }
+}
+
+async function handleEquipeFoto(input) {
+  if (!input.files[0]) return;
+  try {
+    const url = await uploadFile(input.files[0]);
+    document.getElementById('equipe-foto').value = url;
+    document.getElementById('equipe-foto-preview').innerHTML = `<img src="${url}" style="max-width:120px;margin-top:8px;border-radius:4px">`;
+    toast('Foto carregada!', 'success');
+  } catch (e) { toast('Erro no upload.', 'error'); }
+}
+
+// ── GALERIA ──
+async function loadGaleria() {
+  const data = await fetch('/api/admin/galeria', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const grid = document.getElementById('galeria-grid');
+  if (!data.length) { grid.innerHTML = '<div class="empty-state"><div class="icon">🖼️</div><p>Galeria vazia</p></div>'; return; }
+  grid.innerHTML = data.map(g => `
+    <div class="gallery-item" data-id="${g.id}">
+      <img src="${g.imagem_url}" alt="Galeria">
+      <div class="overlay">
+        <button style="background:rgba(231,76,60,.85)" onclick="deleteItem('galeria',${g.id})">✕</button>
+      </div>
+    </div>`).join('');
+
+  // Drag zone
+  const dz = document.getElementById('drop-galeria');
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); handleDropGaleria(e.dataTransfer.files); });
+}
+
+async function handleDropGaleria(files) {
+  for (const file of files) {
+    try {
+      const url = await uploadFile(file);
+      await fetch('/api/admin/galeria', {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify({ imagem_url: url, posicao: 0, ativo: 1 })
+      });
+    } catch (e) { console.error(e); }
+  }
+  toast('Imagens adicionadas!');
+  loadGaleria();
+}
+
+async function handleGaleriaUpload(input) {
+  if (!input.files[0]) return;
+  try {
+    const url = await uploadFile(input.files[0]);
+    document.getElementById('galeria-url').value = url;
+    document.getElementById('galeria-preview').innerHTML = `<img src="${url}" style="max-width:100%;max-height:150px;margin-top:10px;border-radius:4px">`;
+    toast('Imagem carregada!', 'success');
+  } catch (e) { toast('Erro no upload.', 'error'); }
+}
+
+async function saveGaleria() {
+  const url = document.getElementById('galeria-url').value;
+  if (!url) { toast('URL ou upload é obrigatório.', 'error'); return; }
+  try {
+    await fetch('/api/admin/galeria', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ imagem_url: url, posicao: parseInt(document.getElementById('galeria-pos').value) || 0, ativo: 1 })
+    });
+    toast('Imagem adicionada à galeria!');
+    closeModal('modal-galeria');
+    loadGaleria();
+  } catch (e) { toast('Erro ao salvar.', 'error'); }
+}
+
+// ── DEPOIMENTOS ──
+async function loadDepoimentos() {
+  const data = await fetch('/api/admin/depoimentos', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const grid = document.getElementById('depoimentos-grid');
+  if (!data.length) { grid.innerHTML = '<div class="empty-state"><div class="icon">💬</div><p>Nenhum depoimento cadastrado</p></div>'; return; }
+  grid.innerHTML = data.map(d => `
+    <div class="item-card">
+      <div class="item-toggle"><label class="toggle"><input type="checkbox" ${d.ativo ? 'checked' : ''} onchange="toggleAtivo('depoimentos',${d.id},this.checked)"><span class="slider"></span></label></div>
+      <div class="item-actions">
+        <button class="btn-edit" onclick="editDepoimento(${d.id})">✎</button>
+        <button class="btn-del" onclick="deleteItem('depoimentos',${d.id})">✕</button>
+      </div>
+      <div class="item-body">
+        <div style="font-style:italic;color:var(--gold);margin-bottom:10px">"${(d.texto || '').substring(0, 80)}..."</div>
+        <div class="item-title">${d.nome}</div>
+        <div class="item-sub">${d.funcao || ''} · ${d.tempo_cliente || ''}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function editDepoimento(id) {
+  const data = await fetch('/api/admin/depoimentos', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const d = data.find(x => x.id === id);
+  if (!d) return;
+  document.getElementById('depoimento-id').value = d.id;
+  document.getElementById('depoimento-texto').value = d.texto || '';
+  document.getElementById('depoimento-nome').value = d.nome || '';
+  document.getElementById('depoimento-funcao').value = d.funcao || '';
+  document.getElementById('depoimento-tempo').value = d.tempo_cliente || '';
+  document.getElementById('depoimento-pos').value = d.posicao;
+  document.getElementById('modal-depoimento-title').textContent = 'Editar Depoimento';
+  openModal('modal-depoimento');
+}
+
+async function saveDepoimento() {
+  const id = document.getElementById('depoimento-id').value;
+  const body = {
+    texto: document.getElementById('depoimento-texto').value,
+    nome: document.getElementById('depoimento-nome').value,
+    funcao: document.getElementById('depoimento-funcao').value,
+    tempo_cliente: document.getElementById('depoimento-tempo').value,
+    posicao: parseInt(document.getElementById('depoimento-pos').value) || 0,
+  };
+  if (!body.texto || !body.nome) { toast('Texto e nome são obrigatórios.', 'error'); return; }
+  try {
+    if (id) await fetch(`/api/admin/depoimentos/${id}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify(body) });
+    else await fetch('/api/admin/depoimentos', { method: 'POST', headers: authHeaders(), body: JSON.stringify(body) });
+    toast(id ? 'Depoimento atualizado!' : 'Depoimento adicionado!');
+    closeModal('modal-depoimento');
+    loadDepoimentos();
+  } catch (e) { toast('Erro ao salvar.', 'error'); }
+}
+
+// ── INSTAGRAM ──
+async function loadInstagram() {
+  const data = await fetch('/api/admin/instagram', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const grid = document.getElementById('instagram-grid');
+  if (!data.length) { grid.innerHTML = '<div class="empty-state"><div class="icon">📸</div><p>Nenhuma foto</p></div>'; return; }
+  grid.innerHTML = data.map(g => `
+    <div class="gallery-item">
+      <img src="${g.imagem_url}" alt="Instagram">
+      <div class="overlay">
+        <button style="background:rgba(231,76,60,.85)" onclick="deleteItem('instagram',${g.id})">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+async function handleInstaUpload(input) {
+  if (!input.files[0]) return;
+  try {
+    const url = await uploadFile(input.files[0]);
+    document.getElementById('insta-url').value = url;
+    document.getElementById('insta-preview').innerHTML = `<img src="${url}" style="max-width:100%;max-height:150px;margin-top:10px;border-radius:4px">`;
+    toast('Imagem carregada!', 'success');
+  } catch (e) { toast('Erro no upload.', 'error'); }
+}
+
+async function saveInstagram() {
+  const url = document.getElementById('insta-url').value;
+  if (!url) { toast('URL ou upload é obrigatório.', 'error'); return; }
+  try {
+    await fetch('/api/admin/instagram', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ imagem_url: url, posicao: parseInt(document.getElementById('insta-pos').value) || 0, ativo: 1 })
+    });
+    toast('Foto adicionada!');
+    closeModal('modal-instagram');
+    loadInstagram();
+  } catch (e) { toast('Erro ao salvar.', 'error'); }
+}
+
+// ── AGENDAMENTOS ──
+async function loadAgendamentos() {
+  const dataEl = document.getElementById('filtro-age-data')?.value || '';
+  const statusEl = document.getElementById('filtro-age-status')?.value || '';
+  let url = '/api/agendamentos?';
+  if (dataEl) url += 'data=' + dataEl + '&';
+  if (statusEl) url += 'status=' + statusEl;
+  const data = await fetch(url, { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const el = document.getElementById('agendamentos-table');
+  if (!data.length) { el.innerHTML = '<p class="text-dim">Nenhum agendamento encontrado.</p>'; return; }
+  el.innerHTML = `<table class="data-table"><tr><th>Nome</th><th>Email</th><th>Serviço</th><th>Data/Hora</th><th>Tel</th><th>Status</th><th>Ações</th></tr>` +
+    data.map(a => `<tr>
+      <td>${a.nome}</td>
+      <td>${a.email || '—'}</td>
+      <td>${a.servico}</td>
+      <td>${new Date(a.data + 'T12:00:00').toLocaleDateString('pt-BR')} ${a.horario}</td>
+      <td><a href="https://wa.me/55${(a.telefone||'').replace(/\D/g,'')}" target="_blank" style="color:var(--gold)">${a.telefone}</a></td>
+      <td><span class="badge badge-${a.status === 'pendente' ? 'novo' : a.status === 'confirmado' ? 'ativo' : a.status === 'concluido' ? 'ativo' : 'inativo'}">${a.status}</span></td>
+      <td class="actions">
+        <select onchange="updAgeStatus(${a.id},this.value)" style="background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--w);padding:4px 8px;font-size:10px;cursor:pointer">
+          <option value="">Alterar</option>
+          <option value="pendente">Pendente</option>
+          <option value="confirmado">Confirmado</option>
+          <option value="concluido">Concluído</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+        <button class="btn-del" onclick="delAge(${a.id})" style="width:32px;height:28px;border-radius:4px;border:none;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;background:rgba(231,76,60,.85);color:#fff">✕</button>
+      </td>
+    </tr>`).join('') + '</table>';
+}
+
+async function updAgeStatus(id, status) {
+  if (!status) return;
+  await fetch(`/api/agendamentos/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'x-admin-token': admToken }, body: JSON.stringify({ status }) });
+  toast('Status atualizado!');
+  loadAgendamentos();
+  loadStats();
+}
+
+async function delAge(id) {
+  if (!confirm('Excluir agendamento?')) return;
+  await fetch(`/api/agendamentos/${id}`, { method: 'DELETE', headers: { 'x-admin-token': admToken } });
+  toast('Agendamento excluído.');
+  loadAgendamentos();
+  loadStats();
+}
+
+function exportCSV() {
+  window.open('/api/agendamentos?token=' + admToken);
+}
+
+// ── CONTATOS ──
+async function loadContatos() {
+  const data = await fetch('/api/contatos', { headers: { 'x-admin-token': admToken } }).then(r => r.json()).catch(() => []);
+  const el = document.getElementById('contatos-table');
+  if (!data.length) { el.innerHTML = '<p class="text-dim">Nenhuma mensagem.</p>'; return; }
+  el.innerHTML = `<table class="data-table"><tr><th>Nome</th><th>Email</th><th>Telefone</th><th>Mensagem</th><th>Data</th><th>Status</th></tr>` +
+    data.map(c => `<tr onclick="markContRead(${c.id})" style="cursor:pointer;${!c.lido ? 'background:rgba(201,169,110,.04)' : ''}">
+      <td style="font-weight:${c.lido?'300':'500'}">${c.nome}</td>
+      <td><a href="mailto:${c.email}" style="color:var(--gold)">${c.email}</a></td>
+      <td>${c.telefone || '—'}</td>
+      <td style="max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.mensagem}</td>
+      <td style="font-size:11px">${new Date(c.criado_em).toLocaleDateString('pt-BR')}</td>
+      <td><span class="badge ${c.lido ? 'badge-lido' : 'badge-novo'}">${c.lido ? 'Lido' : 'Novo'}</span></td>
+    </tr>`).join('') + '</table>';
+}
+
+async function markContRead(id) {
+  await fetch(`/api/contatos/${id}/lido`, { method: 'PUT', headers: { 'x-admin-token': admToken } });
+  loadContatos();
+  loadStats();
+}
+
+// ── CONFIG ──
+async function loadConfig() {
+  try {
+    const cfg = await fetch('/api/config', { headers: { 'x-admin-token': admToken } }).then(r => r.json());
+    const fields = {
+      'cfg-whatsapp': 'whatsapp', 'cfg-instagram': 'instagram', 'cfg-endereco': 'endereco',
+      'cfg-horarios': 'horarios', 'cfg-sobre': 'sobre_texto', 'cfg-anos': 'stat_anos',
+      'cfg-clientes': 'stat_clientes', 'cfg-servicos': 'stat_servicos',
+      'cfg-esp-nome': 'esp_nome', 'cfg-esp-cargo': 'esp_cargo',
+      'cfg-esp-citacao': 'esp_citacao', 'cfg-esp-creds': 'esp_creds',
+      'smtp-contato': 'email_contato', 'smtp-host': 'email_smtp_host',
+      'smtp-port': 'email_smtp_port', 'smtp-user': 'email_smtp_user',
+    };
+    for (const [id, key] of Object.entries(fields)) {
+      const el = document.getElementById(id);
+      if (el && cfg[key] !== undefined) el.value = cfg[key];
+    }
+    // SEO
+    try {
+      const seo = await fetch('/api/admin/seo', { headers: { 'x-admin-token': admToken } }).then(r => r.json());
+      if (seo.length) {
+        const s = seo[0];
+        document.getElementById('seo-titulo').value = s.titulo || '';
+        document.getElementById('seo-desc').value = s.descricao || '';
+        document.getElementById('seo-keywords').value = s.keywords || '';
+        document.getElementById('seo-og').value = s.imagem_og || '';
+      }
+    } catch (e) { }
+    // Logo
+    const logoPreview = document.getElementById('logo-preview');
+    if (cfg.logo_url) logoPreview.innerHTML = `<img src="${cfg.logo_url}" style="max-width:200px;margin-top:10px;border-radius:4px">`;
+    if (cfg.sobre_imagem) document.getElementById('sobre-img-preview').innerHTML = `<img src="${cfg.sobre_imagem}" style="max-width:200px;margin-top:10px;border-radius:4px">`;
+    if (cfg.esp_foto) document.getElementById('esp-img-preview').innerHTML = `<img src="${cfg.esp_foto}" style="max-width:200px;margin-top:10px;border-radius:4px">`;
+  } catch (e) { console.error(e); }
+}
+
+async function saveConfig() {
+  const data = {
+    whatsapp: document.getElementById('cfg-whatsapp').value,
+    instagram: document.getElementById('cfg-instagram').value,
+    endereco: document.getElementById('cfg-endereco').value,
+    horarios: document.getElementById('cfg-horarios').value,
+    sobre_texto: document.getElementById('cfg-sobre').value,
+    stat_anos: document.getElementById('cfg-anos').value,
+    stat_clientes: document.getElementById('cfg-clientes').value,
+    stat_servicos: document.getElementById('cfg-servicos').value,
+    esp_nome: document.getElementById('cfg-esp-nome').value,
+    esp_cargo: document.getElementById('cfg-esp-cargo').value,
+    esp_citacao: document.getElementById('cfg-esp-citacao').value,
+    esp_creds: document.getElementById('cfg-esp-creds').value,
+  };
+  try {
+    await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify(data) });
+    toast('Configurações salvas!');
+  } catch (e) { toast('Erro ao salvar.', 'error'); }
+}
+
+async function changePassword() {
+  const p1 = document.getElementById('cfg-senha').value;
+  const p2 = document.getElementById('cfg-senha2').value;
+  if (!p1 || p1.length < 6) { toast('Senha mínimo 6 caracteres.', 'error'); return; }
+  if (p1 !== p2) { toast('Senhas não conferem.', 'error'); return; }
+  await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ admin_senha: p1 }) });
+  toast('Senha alterada!');
+  document.getElementById('cfg-senha').value = '';
+  document.getElementById('cfg-senha2').value = '';
+}
+
+async function saveSeo() {
+  try {
+    const seo = await fetch('/api/admin/seo', { headers: { 'x-admin-token': admToken } }).then(r => r.json());
+    if (!seo.length) { toast('SEO não encontrado.', 'error'); return; }
+    const data = {
+      titulo: document.getElementById('seo-titulo').value,
+      descricao: document.getElementById('seo-desc').value,
+      keywords: document.getElementById('seo-keywords').value,
+      imagem_og: document.getElementById('seo-og').value,
+    };
+    await fetch(`/api/admin/seo/${seo[0].id}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify(data) });
+    toast('SEO salvo!');
+  } catch (e) { toast('Erro ao salvar SEO.', 'error'); }
+}
+
+async function saveSmtp() {
+  const data = {
+    email_contato: document.getElementById('smtp-contato').value,
+    email_smtp_host: document.getElementById('smtp-host').value,
+    email_smtp_port: document.getElementById('smtp-port').value,
+    email_smtp_user: document.getElementById('smtp-user').value,
+    email_smtp_pass: document.getElementById('smtp-pass').value,
+  };
+  await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify(data) });
+  toast('SMTP salvo!');
+}
+
+// ── COLORS & LOGO ──
+async function handleLogoUpload(input) {
+  if (!input.files[0]) return;
+  try {
+    const url = await uploadFile(input.files[0]);
+    document.getElementById('logo-url').value = url;
+    await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ logo_url: url }) });
+    document.getElementById('logo-preview').innerHTML = `<img src="${url}" style="max-width:200px;margin-top:10px;border-radius:4px">`;
+    toast('Logo atualizado!', 'success');
+  } catch (e) { toast('Erro no upload.', 'error'); }
+}
+
+async function setLogoUrl() {
+  const url = document.getElementById('logo-url').value;
+  if (!url) return;
+  await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ logo_url: url }) });
+  document.getElementById('logo-preview').innerHTML = `<img src="${url}" style="max-width:200px;margin-top:10px;border-radius:4px">`;
+  toast('Logo atualizado!', 'success');
+}
+
+async function handleSobreImg(input) {
+  if (!input.files[0]) return;
+  try {
+    const url = await uploadFile(input.files[0]);
+    await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ sobre_imagem: url }) });
+    document.getElementById('sobre-img-preview').innerHTML = `<img src="${url}" style="max-width:200px;margin-top:10px;border-radius:4px">`;
+    toast('Imagem da seção Sobre atualizada!', 'success');
+  } catch (e) { toast('Erro no upload.', 'error'); }
+}
+
+async function handleEspImg(input) {
+  if (!input.files[0]) return;
+  try {
+    const url = await uploadFile(input.files[0]);
+    await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ esp_foto: url }) });
+    document.getElementById('esp-img-preview').innerHTML = `<img src="${url}" style="max-width:200px;margin-top:10px;border-radius:4px">`;
+    toast('Foto da especialista atualizada!', 'success');
+  } catch (e) { toast('Erro no upload.', 'error'); }
+}
+
+async function saveColors() {
+  toast('Cores salvas (implementação futura: aplicar via CSS dinâmico)', 'success');
+}
+
+// ── GENERIC CRUD ──
+async function deleteItem(table, id) {
+  if (!confirm('Excluir item?')) return;
+  await fetch(`/api/admin/${table}/${id}`, { method: 'DELETE', headers: { 'x-admin-token': admToken } });
+  toast('Item excluído.');
+  // Reload section
+  if (table === 'slides') loadSlides();
+  else if (table === 'servicos') loadServicos();
+  else if (table === 'equipe') loadEquipe();
+  else if (table === 'galeria') loadGaleria();
+  else if (table === 'depoimentos') loadDepoimentos();
+  else if (table === 'instagram') loadInstagram();
+}
+
+async function toggleAtivo(table, id, ativo) {
+  await fetch(`/api/admin/${table}/${id}`, {
+    method: 'PUT',
+    headers: authHeaders(),
+    body: JSON.stringify({ ativo: ativo ? 1 : 0 })
+  });
+  toast(ativo ? 'Ativado!' : 'Desativado!');
+}
+</script>
+</body>
+</html>

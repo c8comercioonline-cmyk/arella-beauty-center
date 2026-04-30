@@ -18,25 +18,16 @@ html{scroll-behavior:smooth}
 }
 body{background:var(--bd);color:var(--w);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden}
 img{display:block}
-
-/* ── TYPOGRAPHY ── */
 .ey{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block}
 .t-hero{font-family:'Cormorant Garamond',serif;font-size:clamp(54px,8vw,108px);font-weight:300;line-height:.92;letter-spacing:-2px}
 .t-hero em{font-style:italic;color:var(--gold)}
 .t-sec{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4.5vw,64px);font-weight:300;line-height:1.05}
 .t-sec em{font-style:italic;color:var(--gold)}
 .t-body{font-size:13.5px;line-height:2;color:var(--muted)}
-
-/* ── BUTTONS ── */
 .btn{display:inline-block;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-weight:500;padding:15px 42px;cursor:pointer;border:none;transition:all .3s}
-.btn-g{background:var(--gold);color:var(--bd)}
-.btn-g:hover{background:var(--gl)}
-.btn-o{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.3)}
-.btn-o:hover{border-color:var(--gold);color:var(--gold)}
-.btn-og{background:transparent;color:var(--gold);border:1px solid var(--bordg)}
-.btn-og:hover{background:var(--gold);color:var(--bd)}
-
-/* ── NAV ── */
+.btn-g{background:var(--gold);color:var(--bd)}.btn-g:hover{background:var(--gl)}
+.btn-o{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.3)}.btn-o:hover{border-color:var(--gold);color:var(--gold)}
+.btn-og{background:transparent;color:var(--gold);border:1px solid var(--bordg)}.btn-og:hover{background:var(--gold);color:var(--bd)}
 #nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);display:flex;align-items:center;padding:0 60px;transition:all .4s;justify-content:space-between}
 #nav.sc{background:rgba(5,13,40,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--bordg);height:70px}
 .nl img{height:46px;transition:height .3s}
@@ -50,14 +41,8 @@ img{display:block}
 .nb:hover{background:var(--gl)}
 .hbg{display:none;flex-direction:column;gap:5px;cursor:pointer}
 .hbg span{display:block;width:24px;height:1px;background:var(--w)}
-
-/* ── TOAST / ALERTS ── */
 .toast{position:fixed;top:24px;right:24px;z-index:9999;padding:16px 24px;font-size:13px;font-family:'Montserrat',sans-serif;border-left:3px solid var(--gold);background:rgba(10,22,64,.97);backdrop-filter:blur(12px);transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);max-width:340px;line-height:1.5}
-.toast.show{transform:translateX(0)}
-.toast.success{border-color:#27AE60}
-.toast.error{border-color:#E74C3C}
-
-/* ── HERO SLIDER ── */
+.toast.show{transform:translateX(0)}.toast.success{border-color:#27AE60}.toast.error{border-color:#E74C3C}
 #hero{height:100vh;position:relative;overflow:hidden}
 .slides{position:absolute;inset:0}
 .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
@@ -82,8 +67,6 @@ img{display:block}
 .hscrl span{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--dim)}
 .scrlbar{width:1px;height:52px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sp 2s infinite}
 @keyframes sp{0%,100%{opacity:1}50%{opacity:.2}}
-
-/* ── SOBRE ── */
 #sobre{background:var(--dk);display:grid;grid-template-columns:1fr 1fr;min-height:88vh;overflow:hidden}
 .si{position:relative;overflow:hidden;min-height:500px}
 .si img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .8s;filter:brightness(.9)}
@@ -96,8 +79,6 @@ img{display:block}
 .stb:not(:last-child){border-right:1px solid var(--border)}
 .stn{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:300;color:var(--gold);line-height:1}
 .stl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-top:5px}
-
-/* ── SERVIÇOS ── */
 #servicos{background:var(--bd);padding:110px 60px}
 .svh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px}
 .svgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
@@ -115,8 +96,6 @@ img{display:block}
 .svc:hover .svd{max-height:70px}
 .svlnk{display:inline-flex;gap:6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-top:12px;opacity:0;transform:translateY(6px);transition:all .4s .1s;text-decoration:none}
 .svc:hover .svlnk{opacity:1;transform:translateY(0)}
-
-/* ── ESPECIALISTA ── */
 #esp{background:var(--dm);display:grid;grid-template-columns:1fr 1fr;min-height:78vh;overflow:hidden}
 .epi{position:relative;overflow:hidden}
 .epi img{width:100%;height:100%;object-fit:cover;object-position:top center;filter:brightness(.88);transition:transform .8s}
@@ -128,8 +107,6 @@ img{display:block}
 .epr{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-top:4px}
 .epd{width:44px;height:1px;background:var(--gold);margin:16px 0}
 .epc{font-size:12px;color:rgba(255,255,255,.4);line-height:2}
-
-/* ── EQUIPE ── */
 #equipe{background:var(--dk);padding:110px 60px}
 .eqh{text-align:center;margin-bottom:24px}
 .eqf{display:flex;justify-content:center;gap:4px;margin-bottom:52px;flex-wrap:wrap}
@@ -147,8 +124,6 @@ img{display:block}
 .ec:hover .ecso{opacity:1;transform:translateY(0)}
 .ecso a{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s}
 .ecso a:hover{color:var(--gold)}
-
-/* ── GALERIA ── */
 #galeria{background:var(--dm);padding:110px 60px}
 .glh{text-align:center;margin-bottom:60px}
 .glg{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:280px 280px;gap:3px}
@@ -159,8 +134,6 @@ img{display:block}
 .gli:hover img{transform:scale(1.06);filter:brightness(1)}
 .gli::after{content:'';position:absolute;inset:0;background:rgba(43,82,204,0);transition:background .4s}
 .gli:hover::after{background:rgba(43,82,204,.08)}
-
-/* ── DEPOIMENTOS ── */
 #dep{background:var(--bd);padding:110px 0}
 .dph{text-align:center;padding:0 60px;margin-bottom:60px}
 .dpw{overflow:hidden}
@@ -179,8 +152,6 @@ img{display:block}
 .dparr{width:46px;height:46px;border:1px solid var(--bordg);background:transparent;color:var(--gold);cursor:pointer;font-size:18px;transition:all .3s}
 .dparr:hover{background:var(--gold);color:var(--bd)}
 .dpct{font-size:11px;letter-spacing:2px;color:var(--dim)}
-
-/* ── AGENDAMENTO ── */
 #age{background:var(--dk);padding:110px 60px}
 .agw{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
 .agi2{padding-top:14px}
@@ -203,16 +174,12 @@ img{display:block}
 .bsub:hover{background:var(--gl)}
 .bsub:disabled{opacity:.6;cursor:not-allowed}
 .calnote{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:10px;color:var(--dim)}
-
-/* HORÁRIOS DISPONÍVEIS */
 .hdisp{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
 .hslot{padding:8px 4px;text-align:center;font-size:11px;border:1px solid var(--border);cursor:pointer;transition:all .2s;color:var(--muted)}
 .hslot.avail{border-color:var(--bordg);color:var(--gold)}
 .hslot.avail:hover,.hslot.sel{background:var(--gold);color:var(--bd);border-color:var(--gold)}
 .hslot.ocup{background:rgba(255,255,255,.04);color:rgba(255,255,255,.2);cursor:not-allowed;text-decoration:line-through}
 .hload{text-align:center;font-size:11px;color:var(--dim);padding:20px 0;display:none}
-
-/* ── CONTATO ── */
 #contato{background:var(--dm);padding:110px 60px}
 .ctw{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .cti2{padding-top:14px}
@@ -225,8 +192,6 @@ img{display:block}
 .ctv{font-size:13px;color:rgba(255,255,255,.55);line-height:1.8}
 .ctv a{color:rgba(255,255,255,.55);text-decoration:none;transition:color .3s}
 .ctv a:hover{color:var(--gold)}
-
-/* ── INSTA STRIP ── */
 #insta{background:var(--bd);padding:80px 60px}
 .inh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px}
 .ing{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
@@ -235,8 +200,6 @@ img{display:block}
 .ini:hover img{transform:scale(1.08);filter:brightness(1)}
 .ini::after{content:'📸';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;opacity:0;transition:opacity .4s;background:rgba(5,13,40,.5)}
 .ini:hover::after{opacity:1}
-
-/* ── FOOTER ── */
 footer{background:var(--bd);border-top:2px solid var(--bordg)}
 .ft{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;padding:72px 60px;gap:0}
 .fc{padding-right:40px}
@@ -256,8 +219,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
 .fcp{font-size:10px;color:var(--dim);letter-spacing:1px}
 .fpp a{font-size:10px;color:var(--dim);text-decoration:none;letter-spacing:1px;transition:color .3s}
 .fpp a:hover{color:var(--gold)}
-
-/* ── WA FLOAT ── */
 .waf{position:fixed;bottom:30px;right:30px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .wab{background:var(--dk);border:1px solid rgba(43,82,204,.35);padding:12px 16px;max-width:216px;text-align:right;opacity:0;transform:translateY(8px) scale(.95);transition:all .4s;pointer-events:none}
 .wab.vis{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
@@ -268,8 +229,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
 .wabtn svg{width:26px;height:26px;fill:white}
 .wabtn::before{content:'';position:absolute;inset:-5px;background:rgba(37,211,102,.14);border-radius:50%;animation:wap 2.2s infinite}
 @keyframes wap{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.28);opacity:0}}
-
-/* ── ADMIN ── */
 #adm{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);justify-content:center;align-items:center}
 #adm.open{display:flex}
 .adc{background:var(--dk);border:1px solid var(--bordg);width:96vw;max-width:1200px;max-height:92vh;overflow-y:auto;display:grid;grid-template-columns:220px 1fr}
@@ -319,8 +278,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
 .abtn.danger:hover{background:rgba(231,76,60,.1)}
 .abtn.success{border-color:rgba(39,174,96,.4);color:#27AE60}
 .abtn.success:hover{background:rgba(39,174,96,.1)}
-
-/* ── ADMIN LOGIN ── */
 #admlogin{display:none;position:fixed;inset:0;z-index:2100;background:rgba(0,0,0,.9);backdrop-filter:blur(12px);justify-content:center;align-items:center}
 #admlogin.open{display:flex}
 .alf{background:var(--dk);border:1px solid var(--bordg);padding:52px;width:380px;text-align:center}
@@ -329,12 +286,8 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
 .alf input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--bordg);color:var(--w);padding:14px 16px;font-family:'Montserrat',sans-serif;font-size:14px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:16px}
 .alf button{width:100%;background:var(--gold);color:var(--bd);border:none;padding:14px;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all .3s}
 .alf button:hover{background:var(--gl)}
-
-/* ── REVEAL ── */
 .rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
 .rv.vis{opacity:1;transform:translateY(0)}
-
-/* ── MOBILE ── */
 @media(max-width:1024px){
   #nav{padding:0 24px} .nc,.nr .fsoc{display:none} .hbg{display:flex}
   .nb{padding:8px 16px;font-size:9px}
@@ -374,13 +327,9 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
 </style>
 </head>
 <body>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
-
-<!-- ── NAV ── -->
 <nav id="nav">
-  <div class="nl"><img src="/logo.png" alt="Arella Beauty Center"></div>
+  <div class="nl"><img src="/logo.png" alt="Arella Beauty Center" id="site-logo"></div>
   <ul class="nc">
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#servicos">Serviços</a></li>
@@ -396,67 +345,19 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </div>
 </nav>
 
-<!-- ── HERO SLIDER ── -->
 <section id="hero">
-
-  <!-- Slide 1: Photo -->
-  <div class="slide photo-s active" id="sl0">
-    <div class="sbg" style="background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&h=1080&fit=crop&q=80')"></div>
-    <div class="sph" style="background-image:url('/logo.png')"></div>
-    <div class="sov"></div>
-    <div class="sc">
-      <div class="st">
-        <span class="ey">Bem-vinda ao</span>
-        <h1 class="t-hero"><em>Arella</em><br>Beauty<br>Center</h1>
-        <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2vw,20px);letter-spacing:7px;text-transform:uppercase;color:rgba(255,255,255,.45);margin:16px 0 42px">A Arte do Cuidado</p>
-        <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <a href="#age" class="btn btn-g">Agendar Agora</a>
-          <a href="#servicos" class="btn btn-o">Nossos Serviços</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Slide 2 -->
-  <div class="slide" id="sl1">
-    <div class="sbg" style="background-image:url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=1920&h=1080&fit=crop&q=80')"></div>
-    <div class="sov2"></div>
-    <div class="sc" style="justify-content:center;text-align:center">
-      <div class="st" style="max-width:800px">
-        <span class="ey">Estética Avançada</span>
-        <h2 class="t-hero">Tratamentos que<br><em>Transformam</em></h2>
-        <p class="t-body" style="max-width:460px;margin:22px auto 42px">Técnicas exclusivas e produtos premium para revelar a sua melhor versão, com cuidado e precisão excepcionais.</p>
-        <a href="#servicos" class="btn btn-og">Conhecer Serviços</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Slide 3 -->
-  <div class="slide" id="sl2">
-    <div class="sbg" style="background-image:url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1920&h=1080&fit=crop&q=80')"></div>
-    <div class="sov" style="background:linear-gradient(to right,rgba(5,13,40,.9) 38%,rgba(5,13,40,.5) 70%,transparent 100%)"></div>
-    <div class="sc">
-      <div class="st">
-        <span class="ey">Belo Horizonte, MG</span>
-        <h2 class="t-hero">Existimos para<br>que seja<br><em>você</em> mesma</h2>
-        <p class="t-body" style="max-width:440px;margin:22px 0 42px">Um refúgio de sofisticação dedicado à sua beleza e bem-estar, onde cada detalhe importa.</p>
-        <a href="#sobre" class="btn btn-g">Nossa História</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="sdots"><button class="dot active" onclick="gsl(0)"></button><button class="dot" onclick="gsl(1)"></button><button class="dot" onclick="gsl(2)"></button></div>
-  <div class="sarrows"><button class="sarr" onclick="psl()">&#8592;</button><button class="sarr" onclick="nsl()">&#8594;</button></div>
+  <div class="slides" id="hero-slides"></div>
+  <div class="sdots" id="hero-dots"></div>
+  <div class="sarrows" id="hero-arrows"></div>
   <div class="hscrl"><span>Scroll</span><div class="scrlbar"></div></div>
 </section>
 
-<!-- ── SOBRE ── -->
 <section id="sobre">
-  <div class="si"><img src="/logo.png" alt="Especialista Arella Beauty Center" loading="lazy"></div>
+  <div class="si"><img src="/logo.png" alt="Especialista Arella Beauty Center" id="sobre-img" loading="lazy"></div>
   <div class="sb">
     <span class="ey">Nossa História</span>
     <h2 class="t-sec">Onde a Beleza<br>Encontra a <em>Arte</em></h2>
-    <blockquote class="sq">"Existimos para que seja você mesma."</blockquote>
+    <blockquote class="sq" id="sobre-citacao">"Existimos para que seja você mesma."</blockquote>
     <p class="t-body" id="sobre-txt">O Arella Beauty Center nasceu do desejo de transformar o cuidado pessoal em uma experiência única e sensorial. Com técnicas avançadas e produtos selecionados, nosso espaço é um refúgio de sofisticação dedicado à sua beleza e bem-estar em Belo Horizonte.</p>
     <div style="margin-top:34px"><a href="#age" class="btn btn-og">Agendar Consulta</a></div>
     <div class="sts">
@@ -467,44 +368,21 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </div>
 </section>
 
-<!-- ── SERVIÇOS ── -->
 <section id="servicos">
   <div class="svh">
     <div><span class="ey">O que Oferecemos</span><h2 class="t-sec">Nossos<br><em>Tratamentos</em></h2></div>
     <p class="t-body" style="max-width:280px;margin:0">Cada serviço é personalizado para revelar sua melhor versão.</p>
   </div>
-  <div class="svgrid">
-    <div class="svc rv">
-      <div class="svi" style="background-image:url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=700&h=900&fit=crop&q=80')"></div>
-      <div class="svo"></div>
-      <div class="svb"><div class="svn">01</div><div class="svt">Limpeza de Pele</div><div class="svd">Tratamento profundo que remove impurezas e renova a luminosidade da pele.</div><a href="#age" class="svlnk">Agendar →</a></div>
-    </div>
-    <div class="svc rv">
-      <div class="svi" style="background-image:url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=700&h=900&fit=crop&q=80')"></div>
-      <div class="svo"></div>
-      <div class="svb"><div class="svn">02</div><div class="svt">Harmonização Facial</div><div class="svd">Procedimentos avançados para harmonizar e realçar sua beleza natural.</div><a href="#age" class="svlnk">Agendar →</a></div>
-    </div>
-    <div class="svc rv">
-      <div class="svi" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=700&h=900&fit=crop&q=80')"></div>
-      <div class="svo"></div>
-      <div class="svb"><div class="svn">03</div><div class="svt">Design de Sobrancelha</div><div class="svd">Técnicas exclusivas para um olhar impecável e natural.</div><a href="#age" class="svlnk">Agendar →</a></div>
-    </div>
-    <div class="svc rv">
-      <div class="svi" style="background-image:url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=700&h=900&fit=crop&q=80')"></div>
-      <div class="svo"></div>
-      <div class="svb"><div class="svn">04</div><div class="svt">Estética Corporal</div><div class="svd">Modelagem, drenagem e tratamentos de alta tecnologia para o seu corpo.</div><a href="#age" class="svlnk">Agendar →</a></div>
-    </div>
-  </div>
+  <div class="svgrid" id="servicos-grid"></div>
   <div style="text-align:center;margin-top:44px"><a href="#age" class="btn btn-og">Ver Todos os Serviços</a></div>
 </section>
 
-<!-- ── ESPECIALISTA ── -->
 <section id="esp">
-  <div class="epi"><img src="/logo.png" alt="Especialista Arella" loading="lazy"></div>
+  <div class="epi"><img src="/logo.png" alt="Especialista Arella" id="esp-img" loading="lazy"></div>
   <div class="epb">
     <span class="ey">Nossa Especialista</span>
     <h2 class="t-sec">Dedicada à sua<br><em>Transformação</em></h2>
-    <blockquote class="epq">"Beleza não é um padrão — é a expressão mais autêntica de quem você é. Estou aqui para te ajudar a brilhar do seu jeito."</blockquote>
+    <blockquote class="epq" id="esp-citacao">"Beleza não é um padrão — é a expressão mais autêntica de quem você é. Estou aqui para te ajudar a brilhar do seu jeito."</blockquote>
     <div class="epn" id="esp-nome">Nome da Especialista</div>
     <div class="epr" id="esp-cargo">Fundadora & Esteticista</div>
     <div class="epd"></div>
@@ -513,7 +391,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </div>
 </section>
 
-<!-- ── EQUIPE ── -->
 <section id="equipe">
   <div class="eqh"><span class="ey">Profissionais</span><h2 class="t-sec">Nossa <em>Equipe</em></h2></div>
   <div class="eqf">
@@ -522,53 +399,21 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
     <button class="fb" onclick="ftm('maq',this)">Maquiadoras</button>
     <button class="fb" onclick="ftm('nail',this)">Nail Artists</button>
   </div>
-  <div class="eqg" id="eqg">
-    <div class="ec rv" data-cat="est">
-      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=750&fit=crop&q=85" alt="Camila Arantes" loading="lazy">
-      <div class="ecinf"><div class="ecn">Camila Arantes</div><div class="ecr">Esteticista Sênior</div><div class="ecso"><a href="https://instagram.com/espacoarella" target="_blank">Instagram</a><a href="https://wa.me/5531999999999" target="_blank">WhatsApp</a></div></div>
-    </div>
-    <div class="ec rv" data-cat="maq">
-      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=750&fit=crop&q=85" alt="Fernanda Lima" loading="lazy">
-      <div class="ecinf"><div class="ecn">Fernanda Lima</div><div class="ecr">Maquiadora</div><div class="ecso"><a href="https://instagram.com/espacoarella" target="_blank">Instagram</a><a href="https://wa.me/5531999999999" target="_blank">WhatsApp</a></div></div>
-    </div>
-    <div class="ec rv" data-cat="est">
-      <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&h=750&fit=crop&q=85" alt="Juliana Melo" loading="lazy">
-      <div class="ecinf"><div class="ecn">Juliana Melo</div><div class="ecr">Especialista em Harmonização</div><div class="ecso"><a href="https://instagram.com/espacoarella" target="_blank">Instagram</a><a href="https://wa.me/5531999999999" target="_blank">WhatsApp</a></div></div>
-    </div>
-    <div class="ec rv" data-cat="nail">
-      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=750&fit=crop&q=85" alt="Patricia Costa" loading="lazy">
-      <div class="ecinf"><div class="ecn">Patricia Costa</div><div class="ecr">Nail Artist</div><div class="ecso"><a href="https://instagram.com/espacoarella" target="_blank">Instagram</a><a href="https://wa.me/5531999999999" target="_blank">WhatsApp</a></div></div>
-    </div>
-  </div>
+  <div class="eqg" id="eqg"></div>
   <div style="text-align:center;margin-top:44px"><a href="#age" class="btn btn-og">Ver Equipe Completa</a></div>
 </section>
 
-<!-- ── GALERIA ── -->
 <section id="galeria">
   <div class="glh"><span class="ey">Galeria</span><h2 class="t-sec">Nosso <em>Espaço</em></h2></div>
-  <div class="glg">
-    <div class="gli rv"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=900&h=1200&fit=crop&q=80" alt="Arella ambiente" loading="lazy"></div>
-    <div class="gli rv"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&h=600&fit=crop&q=80" alt="Arella tratamento" loading="lazy"></div>
-    <div class="gli rv"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&h=600&fit=crop&q=80" alt="Arella spa" loading="lazy"></div>
-    <div class="gli rv"><img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&h=600&fit=crop&q=80" alt="Arella skin" loading="lazy"></div>
-    <div class="gli rv"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=900&h=600&fit=crop&q=80" alt="Arella beauty" loading="lazy"></div>
-  </div>
+  <div class="glg" id="glg"></div>
   <div style="text-align:center;margin-top:44px">
-    <a href="https://instagram.com/espacoarella" target="_blank" class="btn btn-og">Ver mais no Instagram</a>
+    <a href="https://instagram.com/espacoarella" target="_blank" id="insta-link" class="btn btn-og">Ver mais no Instagram</a>
   </div>
 </section>
 
-<!-- ── DEPOIMENTOS ── -->
 <section id="dep">
   <div class="dph"><span class="ey">Clientes</span><h2 class="t-sec">O que dizem sobre<br>a <em>Arella</em></h2></div>
-  <div class="dpw"><div class="dpt" id="dpt">
-    <div class="dc"><div class="dcs">★★★★★</div><p class="dct">"Experiência incrível do início ao fim. A equipe é extremamente profissional e o resultado superou todas as expectativas."</p><div class="dca"><div class="dcav">A</div><div><div class="dcn">Ana Paula S.</div><div class="dcu">Cliente há 3 anos</div></div></div></div>
-    <div class="dc"><div class="dcs">★★★★★</div><p class="dct">"Ambiente luxuoso e acolhedor. Fiz harmonização facial e o resultado ficou absolutamente natural. Recomendo!"</p><div class="dca"><div class="dcav">M</div><div><div class="dcn">Mariana L.</div><div class="dcu">Cliente há 1 ano</div></div></div></div>
-    <div class="dc"><div class="dcs">★★★★★</div><p class="dct">"Não troco o Arella por nada. Além dos resultados maravilhosos, me sinto acolhida cada vez que entro lá."</p><div class="dca"><div class="dcav">F</div><div><div class="dcn">Fernanda R.</div><div class="dcu">Cliente há 5 anos</div></div></div></div>
-    <div class="dc"><div class="dcs">★★★★★</div><p class="dct">"A limpeza de pele foi transformadora! Minha pele nunca esteve tão luminosa. Atendimento impecável e ambiente incrível."</p><div class="dca"><div class="dcav">B</div><div><div class="dcn">Beatriz S.</div><div class="dcu">Cliente há 8 meses</div></div></div></div>
-    <div class="dc"><div class="dcs">★★★★★</div><p class="dct">"Fiz maquiagem para meu casamento com a equipe da Arella. Ficou perfeito, durou o dia todo e me senti diva!"</p><div class="dca"><div class="dcav">C</div><div><div class="dcn">Camila P.</div><div class="dcu">Noiva 2024</div></div></div></div>
-    <div class="dc"><div class="dcs">★★★★★</div><p class="dct">"Vim uma vez e me apaixonei. Profissionais que realmente ouvem o que você quer e entregam muito além do esperado."</p><div class="dca"><div class="dcav">L</div><div><div class="dcn">Larissa M.</div><div class="dcu">Cliente há 2 anos</div></div></div></div>
-  </div></div>
+  <div class="dpw"><div class="dpt" id="dpt"></div></div>
   <div class="dpc">
     <button class="dparr" onclick="dpPrev()">&#8592;</button>
     <span class="dpct" id="dpct">01 / 06</span>
@@ -576,7 +421,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </div>
 </section>
 
-<!-- ── AGENDAMENTO ── -->
 <section id="age">
   <div class="agw">
     <div class="agi2">
@@ -627,7 +471,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </div>
 </section>
 
-<!-- ── CONTATO ── -->
 <section id="contato">
   <div class="ctw">
     <div class="cti2">
@@ -637,7 +480,7 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
       <div class="ctg">
         <div class="ctit"><div class="cticon">📍</div><div><div class="ctlb">Endereço</div><div class="ctv" id="c-end">Belo Horizonte, MG<br>Consulte pelo WhatsApp</div></div></div>
         <div class="ctit"><div class="cticon">💬</div><div><div class="ctlb">WhatsApp</div><div class="ctv"><a href="https://wa.me/5531999999999" id="c-wa" target="_blank">(31) 9 9999-9999</a></div></div></div>
-        <div class="ctit"><div class="cticon">📸</div><div><div class="ctlb">Instagram</div><div class="ctv"><a href="https://instagram.com/espacoarella" target="_blank">@espacoarella</a></div></div></div>
+        <div class="ctit"><div class="cticon">📸</div><div><div class="ctlb">Instagram</div><div class="ctv"><a href="https://instagram.com/espacoarella" id="c-ig" target="_blank">@espacoarella</a></div></div></div>
       </div>
     </div>
     <div class="fw">
@@ -656,29 +499,20 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </div>
 </section>
 
-<!-- ── INSTA STRIP ── -->
 <section id="insta">
   <div class="inh">
-    <div><span class="ey">Siga-nos</span><h2 class="t-sec">@<em>espacoarella</em></h2></div>
-    <a href="https://instagram.com/espacoarella" target="_blank" class="btn btn-og">Ver no Instagram</a>
+    <div><span class="ey">Siga-nos</span><h2 class="t-sec" id="insta-handle">@<em>espacoarella</em></h2></div>
+    <a href="https://instagram.com/espacoarella" target="_blank" id="insta-btn" class="btn btn-og">Ver no Instagram</a>
   </div>
-  <div class="ing">
-    <div class="ini"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=700&h=900&fit=crop&q=80" alt="Arella Instagram" loading="lazy"></div>
-    <div class="ini"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=700&h=900&fit=crop&q=80" alt="Arella Instagram" loading="lazy"></div>
-    <div class="ini"><img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=700&h=900&fit=crop&q=80" alt="Arella Instagram" loading="lazy"></div>
-    <div class="ini"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=700&h=900&fit=crop&q=80" alt="Arella Instagram" loading="lazy"></div>
-    <div class="ini"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&h=600&fit=crop&q=80" alt="Arella Instagram" loading="lazy"></div>
-    <div class="ini"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&h=600&fit=crop&q=80" alt="Arella Instagram" loading="lazy"></div>
-  </div>
+  <div class="ing" id="insta-grid"></div>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer>
   <div class="ft">
     <div class="fc">
-      <div class="fli"><img src="/logo.png" alt="Arella"></div>
-      <p class="fd">Um espaço de beleza e bem-estar dedicado à sua transformação, com técnicas avançadas e cuidado exclusivo em Belo Horizonte.</p>
-      <div class="fsoc"><a href="https://instagram.com/espacoarella" target="_blank">Instagram</a><a href="https://wa.me/5531999999999" target="_blank">WhatsApp</a></div>
+      <div class="fli"><img src="/logo.png" alt="Arella" id="footer-logo"></div>
+      <p class="fd" id="footer-desc">Um espaço de beleza e bem-estar dedicado à sua transformação, com técnicas avançadas e cuidado exclusivo em Belo Horizonte.</p>
+      <div class="fsoc"><a href="https://instagram.com/espacoarella" id="footer-ig" target="_blank">Instagram</a><a href="https://wa.me/5531999999999" id="footer-wa" target="_blank">WhatsApp</a></div>
     </div>
     <div class="fc">
       <div class="fct">Mapa do Site</div>
@@ -686,11 +520,11 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
     </div>
     <div class="fc">
       <div class="fct">Serviços</div>
-      <ul class="flinks"><li><a href="#age">Limpeza de Pele</a></li><li><a href="#age">Harmonização Facial</a></li><li><a href="#age">Estética Corporal</a></li><li><a href="#age">Design de Sobrancelha</a></li><li><a href="#age">Laser & Luz Pulsada</a></li><li><a href="#age">Maquiagem</a></li><li><a href="#age">Manicure & Nail Art</a></li></ul>
+      <ul class="flinks" id="footer-servicos"><li><a href="#age">Limpeza de Pele</a></li><li><a href="#age">Harmonização Facial</a></li><li><a href="#age">Estética Corporal</a></li><li><a href="#age">Design de Sobrancelha</a></li></ul>
     </div>
     <div class="fc">
       <div class="fct">Contato</div>
-      <ul class="flinks"><li><a href="https://wa.me/5531999999999" target="_blank">(31) 9 9999-9999</a></li><li><a href="https://instagram.com/espacoarella" target="_blank">@espacoarella</a></li><li><a href="#contato">Belo Horizonte, MG</a></li></ul>
+      <ul class="flinks"><li><a href="https://wa.me/5531999999999" id="footer-wa2" target="_blank">(31) 9 9999-9999</a></li><li><a href="https://instagram.com/espacoarella" id="footer-ig2" target="_blank">@espacoarella</a></li><li><a href="#contato">Belo Horizonte, MG</a></li></ul>
       <div style="margin-top:26px"><a href="#age" class="btn btn-g" style="padding:12px 26px">Agendar Agora</a></div>
     </div>
   </div>
@@ -700,7 +534,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </div>
 </footer>
 
-<!-- ── WA FLOAT ── -->
 <div class="waf">
   <div class="wab" id="wab"><p>Olá! 👋 Posso te ajudar a agendar seu tratamento?</p><span>Equipe Arella</span></div>
   <a href="#" class="wabtn" id="wabtn">
@@ -708,7 +541,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </a>
 </div>
 
-<!-- ── ADMIN LOGIN ── -->
 <div id="admlogin">
   <div class="alf">
     <h3>Arella</h3>
@@ -719,7 +551,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
   </div>
 </div>
 
-<!-- ── ADMIN PANEL ── -->
 <div id="adm">
   <div class="adc">
     <div class="ads">
@@ -735,14 +566,12 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
     </div>
     <div class="acnt">
       <div class="ah"><h2>Painel Administrativo</h2><button class="acl" onclick="closeAdm()">✕ Fechar</button></div>
-
-      <!-- DASHBOARD -->
       <div class="atab active" id="tab-dash">
-        <div class="acards" id="stats-cards">
-          <div class="acard"><div class="aclb">Agendamentos Hoje</div><div class="acv" id="st-hoje">—</div><div class="acs2">Carregando...</div></div>
-          <div class="acard"><div class="aclb">Este Mês</div><div class="acv" id="st-mes">—</div><div class="acs2">Via sistema</div></div>
-          <div class="acard"><div class="aclb">Pendentes</div><div class="acv" id="st-pend">—</div><div class="acs2">Aguardando confirmação</div></div>
-          <div class="acard"><div class="aclb">Contatos não lidos</div><div class="acv" id="st-cont">—</div><div class="acs2">Mensagens novas</div></div>
+        <div class="acards">
+          <div class="acard"><div class="aclb">Agendamentos Hoje</div><div class="acv" id="st-hoje">—</div></div>
+          <div class="acard"><div class="aclb">Este Mês</div><div class="acv" id="st-mes">—</div></div>
+          <div class="acard"><div class="aclb">Pendentes</div><div class="acv" id="st-pend">—</div></div>
+          <div class="acard"><div class="aclb">Contatos Não Lidos</div><div class="acv" id="st-cont">—</div></div>
         </div>
         <p class="ast">Próximos Agendamentos</p>
         <div class="afilter">
@@ -751,8 +580,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
         </div>
         <div id="age-list">Carregando...</div>
       </div>
-
-      <!-- AGENDAMENTOS -->
       <div class="atab" id="tab-age2">
         <p class="ast">Todos os Agendamentos</p>
         <div class="afilter">
@@ -762,14 +589,10 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
         </div>
         <div id="age-list2">Carregando...</div>
       </div>
-
-      <!-- CONTATOS -->
       <div class="atab" id="tab-cont">
         <p class="ast">Mensagens de Contato</p>
         <div id="cont-list">Carregando...</div>
       </div>
-
-      <!-- CONFIGURAÇÕES -->
       <div class="atab" id="tab-cfg">
         <p class="ast">Configurações Gerais</p>
         <div class="aes"><div class="aest">Informações de Contato</div>
@@ -796,8 +619,6 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
           <button class="svb" onclick="changePwd()">Alterar Senha</button>
         </div>
       </div>
-
-      <!-- EMAIL SMTP -->
       <div class="atab" id="tab-email">
         <p class="ast">Configuração de Email</p>
         <div class="aes"><div class="aest">SMTP — Envio de Emails</div>
@@ -811,41 +632,215 @@ footer{background:var(--bd);border-top:2px solid var(--bordg)}
           <p style="font-size:11px;color:var(--dim);margin-top:12px">Para Gmail: ative a verificação 2 fatores e gere uma <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color:var(--gold)">senha de app</a>.</p>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
 <script>
-// ── STATE ──
-let waNum='5531999999999', admToken=null, curSlide=0, dpIdx=0;
-const TOTAL_SLIDES=3, TOTAL_DEP=6;
+let waNum='5531999999999', admToken=null, curSlide=0, dpIdx=0, TOTAL_SLIDES=3, TOTAL_DEP=6;
+let slTimer=null;
 
-// ── INIT ──
 window.addEventListener('load',()=>{
   setTimeout(()=>document.getElementById('wab').classList.add('vis'),5000);
   document.getElementById('f-data').min=new Date().toISOString().split('T')[0];
-  startSlider(); initDep(); revealInit();
-  loadPublicConfig();
-  // Admin token restore
+  loadSiteContent();
+  revealInit();
   admToken=sessionStorage.getItem('adm_token');
-  // Keyboard shortcut: Ctrl+Shift+A
   window.addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&e.key==='A')openAdmLogin()});
 });
 
-// ── PUBLIC CONFIG ──
-async function loadPublicConfig(){
+async function loadSiteContent(){
   try{
-    const cfg=await fetch('/api/config/publica').then(r=>r.json());
-    if(cfg.whatsapp) waNum=cfg.whatsapp;
-    if(cfg.horarios) document.getElementById('info-hr').textContent=cfg.horarios;
-    if(cfg.endereco) document.getElementById('info-end').innerHTML=cfg.endereco.replace(/\n/g,'<br>');
-    if(cfg.sobre_texto) document.getElementById('sobre-txt').textContent=cfg.sobre_texto;
-    // Update WA links
-    document.querySelectorAll('[href*="wa.me"]').forEach(a=>{
-      if(!a.id||a.id!=='wabtn') a.href=`https://wa.me/${cfg.whatsapp||waNum}`;
-    });
-  }catch(e){console.warn('Config load failed',e)}
+    const data=await fetch('/api/site').then(r=>r.json());
+    if(!data) return;
+
+    // Config
+    if(data.config){
+      const c=data.config;
+      if(c.whatsapp){waNum=c.whatsapp;updateWA(waNum);}
+      if(c.horarios) document.getElementById('info-hr').textContent=c.horarios;
+      if(c.endereco) document.getElementById('info-end').innerHTML=c.endereco.replace(/\n/g,'<br>');
+      if(c.sobre_texto){document.getElementById('sobre-txt').textContent=c.sobre_texto;document.getElementById('footer-desc').textContent=c.sobre_texto;}
+      if(c.stat_anos) document.getElementById('s-anos').textContent=c.stat_anos;
+      if(c.stat_clientes) document.getElementById('s-cli').textContent=c.stat_clientes;
+      if(c.stat_servicos) document.getElementById('s-sv').textContent=c.stat_servicos;
+      if(c.esp_nome) document.getElementById('esp-nome').textContent=c.esp_nome;
+      if(c.esp_cargo) document.getElementById('esp-cargo').textContent=c.esp_cargo;
+      if(c.esp_creds) document.getElementById('esp-creds').innerHTML=(c.esp_creds||'').replace(/\n/g,'<br>');
+      if(c.esp_citacao) document.getElementById('esp-citacao').textContent=c.esp_citacao;
+      if(c.sobre_imagem) document.getElementById('sobre-img').src=c.sobre_imagem;
+      if(c.esp_foto) document.getElementById('esp-img').src=c.esp_foto;
+      if(c.logo_url){
+        document.getElementById('site-logo').src=c.logo_url;
+        document.getElementById('footer-logo').src=c.logo_url;
+      }
+      if(c.instagram){
+        const ig=c.instagram;
+        ['footer-ig','footer-ig2','c-ig'].forEach(id=>{const el=document.getElementById(id);if(el)el.href=ig;});
+        const handle=ig.replace('https://','').replace('http://','').replace('instagram.com/','').replace('/','');
+        document.getElementById('insta-handle').innerHTML=`@<em>${handle}</em>`;
+        document.getElementById('insta-btn').href=ig;
+        document.getElementById('insta-link').href=ig;
+      }
+      if(c.esp_citacao) document.getElementById('sobre-citacao').textContent=c.esp_citacao;
+    }
+
+    // Slides
+    if(data.slides?.length){buildSlides(data.slides);TOTAL_SLIDES=data.slides.length;}
+
+    // Serviços
+    if(data.servicos?.length){
+      buildServicos(data.servicos);
+      // Footer links
+      const sLinks=document.getElementById('footer-servicos');
+      if(sLinks) sLinks.innerHTML=data.servicos.map(s=>`<li><a href="#age">${s.nome}</a></li>`).join('');
+    }
+
+    // Equipe
+    if(data.equipe?.length) buildEquipe(data.equipe);
+
+    // Galeria
+    if(data.galeria?.length) buildGaleria(data.galeria);
+
+    // Depoimentos
+    if(data.depoimentos?.length){buildDepoimentos(data.depoimentos);TOTAL_DEP=data.depoimentos.length;}
+
+    // Instagram
+    if(data.instagram?.length) buildInstagram(data.instagram);
+
+  }catch(e){console.warn('Site load failed',e);}
+}
+
+function updateWA(num){
+  ['c-wa','footer-wa','footer-wa2'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.href=`https://wa.me/${num}`;
+  });
+}
+
+// ── SLIDER ──
+function buildSlides(slides){
+  const container=document.getElementById('hero-slides');
+  container.innerHTML='';
+  slides.forEach((s,i)=>{
+    const div=document.createElement('div');
+    div.className=`slide ${i===0?'active':''} ${s.tipo==='photo'?'photo-s':''}`;
+    const bg=s.imagem_url?`background-image:url('${s.imagem_url}')`:'background:var(--royal)';
+    const ov=s.tipo==='photo'?' sov':(i===1?' sov2':'');
+    let subtitle=(s.subtitulo||'').split('\n');
+    const subHtml=s.subtitulo?s.subtitulo.split('\n').map((l,j)=>{
+      if(i===0&&j===0) return `<em>${l}</em>`;
+      return l;
+    }).join('<br>'):'';
+    div.innerHTML=`
+      <div class="sbg" style="${bg}"></div>
+      ${s.tipo==='photo'?'<div class="sph" style="background-image:url(\'/logo.png\')"></div>':''}
+      <div class="${ov||'sov'}"></div>
+      <div class="sc ${i===1?' style="justify-content:center;text-align:center"':''}">
+        <div class="st ${i===1?' style="max-width:800px"':''}">
+          ${s.titulo?`<span class="ey">${s.titulo}</span>`:''}
+          <h2 class="t-hero">${subHtml}</h2>
+          ${s.texto_botao?`<div style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap"><a href="${s.link_botao||'#age'}" class="btn ${i===0?'btn-g':i===1?'btn-og':'btn-o'}">${s.texto_botao}</a></div>`:''}
+        </div>
+      </div>`;
+    container.appendChild(div);
+  });
+
+  // Dots
+  const dots=document.getElementById('hero-dots');
+  dots.innerHTML='';
+  slides.forEach((_,i)=>{const b=document.createElement('button');b.className='dot'+(i===0?' active':'');b.onclick=()=>gsl(i);dots.appendChild(b);});
+
+  // Arrows
+  const arrows=document.getElementById('hero-arrows');
+  arrows.innerHTML='<button class="sarr" onclick="psl()">&#8592;</button><button class="sarr" onclick="nsl()">&#8594;</button>';
+
+  curSlide=0;
+  clearInterval(slTimer);
+  startSlider();
+}
+
+function gsl(n){
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===n));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  curSlide=n;
+}
+function nsl(){gsl((curSlide+1)%TOTAL_SLIDES)}
+function psl(){gsl((curSlide-1+TOTAL_SLIDES)%TOTAL_SLIDES)}
+function startSlider(){slTimer=setInterval(nsl,5500)}
+document.getElementById('hero')?.addEventListener('mouseenter',()=>clearInterval(slTimer));
+document.getElementById('hero')?.addEventListener('mouseleave',startSlider);
+
+// ── SERVIÇOS ──
+function buildServicos(servicos){
+  const grid=document.getElementById('servicos-grid');
+  grid.innerHTML=servicos.map((s,i)=>`
+    <div class="svc rv">
+      <div class="svi" style="${s.imagem_url?`background-image:url('${s.imagem_url}')`:'background:var(--royal)'}"></div>
+      <div class="svo"></div>
+      <div class="svb"><div class="svn">0${i+1}</div><div class="svt">${s.nome||''}</div><div class="svd">${s.descricao||''}</div><a href="#age" class="svlnk">Agendar →</a></div>
+    </div>`).join('');
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.07});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+}
+
+// ── EQUIPE ──
+function buildEquipe(equipe){
+  const grid=document.getElementById('eqg');
+  grid.innerHTML=equipe.map(m=>`
+    <div class="ec rv" data-cat="${m.categoria||'est'}">
+      <img src="${m.foto_url||'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=750&fit=crop'}" alt="${m.nome||''}" loading="lazy">
+      <div class="ecinf"><div class="ecn">${m.nome||''}</div><div class="ecr">${m.cargo||''}</div><div class="ecso">
+        ${m.instagram?`<a href="${m.instagram}" target="_blank">Instagram</a>`:''}
+        ${m.whatsapp?`<a href="https://wa.me/${m.whatsapp}" target="_blank">WhatsApp</a>`:''}
+      </div></div>
+    </div>`).join('');
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.07});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+}
+
+// ── GALERIA ──
+function buildGaleria(imgs){
+  const grid=document.getElementById('glg');
+  grid.innerHTML=imgs.map((g,i)=>`
+    <div class="gli rv" style="${i===0?'grid-column:span 2;grid-row:span 2':i===4?'grid-column:span 2':''}">
+      <img src="${g.imagem_url}" alt="Arella galeria" loading="lazy">
+    </div>`).join('');
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.07});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+}
+
+// ── DEPOIMENTOS ──
+function buildDepoimentos(depoimentos){
+  const track=document.getElementById('dpt');
+  track.innerHTML=depoimentos.map(d=>`
+    <div class="dc">
+      <div class="dcs">★★★★★</div>
+      <p class="dct">"${d.texto||''}"</p>
+      <div class="dca">
+        <div class="dcav">${(d.nome||'?')[0].toUpperCase()}</div>
+        <div><div class="dcn">${d.nome||''}</div><div class="dcu">${d.tempo_cliente||''}</div></div>
+      </div>
+    </div>`).join('');
+  dpIdx=0;
+  updateDep();
+}
+
+function dpNext(){if(dpIdx<TOTAL_DEP-3)dpIdx++;updateDep()}
+function dpPrev(){if(dpIdx>0)dpIdx--;updateDep()}
+function updateDep(){
+  const track=document.getElementById('dpt');
+  const card=track.querySelector('.dc');
+  const cw=(card?.offsetWidth||360)+3;
+  track.style.transform=`translateX(-${dpIdx*cw}px)`;
+  document.getElementById('dpct').textContent=`${String(dpIdx+1).padStart(2,'0')} / ${String(TOTAL_DEP).padStart(2,'0')}`;
+}
+window.addEventListener('resize',updateDep);
+
+// ── INSTAGRAM ──
+function buildInstagram(imgs){
+  const grid=document.getElementById('insta-grid');
+  grid.innerHTML=imgs.map(g=>`<div class="ini"><img src="${g.imagem_url}" alt="Arella Instagram" loading="lazy"></div>`).join('');
 }
 
 // ── NAV ──
@@ -859,43 +854,15 @@ function toggleMob(){
 // ── TOAST ──
 function toast(msg,type='success'){
   const el=document.getElementById('toast');
-  el.textContent=msg; el.className=`toast ${type} show`;
+  el.textContent=msg;el.className=`toast ${type} show`;
   setTimeout(()=>el.classList.remove('show'),4500);
 }
-
-// ── HERO SLIDER ──
-let slTimer;
-function gsl(n){
-  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===n));
-  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
-  curSlide=n;
-}
-function nsl(){gsl((curSlide+1)%TOTAL_SLIDES)}
-function psl(){gsl((curSlide-1+TOTAL_SLIDES)%TOTAL_SLIDES)}
-function startSlider(){slTimer=setInterval(nsl,5500)}
-document.getElementById('hero').addEventListener('mouseenter',()=>clearInterval(slTimer));
-document.getElementById('hero').addEventListener('mouseleave',startSlider);
-
-// ── DEPOIMENTOS ──
-function initDep(){updateDep()}
-function dpNext(){if(dpIdx<TOTAL_DEP-3)dpIdx++;updateDep()}
-function dpPrev(){if(dpIdx>0)dpIdx--;updateDep()}
-function updateDep(){
-  const track=document.getElementById('dpt');
-  const card=track.querySelector('.dc');
-  const cw=(card?.offsetWidth||360)+3;
-  track.style.transform=`translateX(-${dpIdx*cw}px)`;
-  document.getElementById('dpct').textContent=`${String(dpIdx+1).padStart(2,'0')} / ${String(TOTAL_DEP).padStart(2,'0')}`;
-}
-window.addEventListener('resize',updateDep);
 
 // ── EQUIPE FILTER ──
 function ftm(cat,el){
   document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  document.querySelectorAll('.ec').forEach(c=>{
-    c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';
-  });
+  document.querySelectorAll('.ec').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';});
 }
 
 // ── WA ──
@@ -904,31 +871,28 @@ document.getElementById('wabtn').addEventListener('click',e=>{
   window.open(`https://wa.me/${waNum}?text=${encodeURIComponent('Olá! Vim pelo site e gostaria de mais informações.')}`,'_blank');
 });
 
-// ── HORÁRIOS DISPONÍVEIS ──
+// ── HORÁRIOS ──
 let horarioSel='';
 async function loadHorarios(){
   const data=document.getElementById('f-data').value;
-  if(!data) return;
+  if(!data)return;
   const container=document.getElementById('hdisp');
   const load=document.getElementById('hload');
   const hr=document.getElementById('f-hr');
-  horarioSel=''; hr.value='';
+  horarioSel='';hr.value='';
   container.innerHTML='';
   load.style.display='block';
   try{
     const res=await fetch(`/api/horarios-disponiveis?data=${data}`).then(r=>r.json());
     load.style.display='none';
-    if(!res.disponiveis?.length&&!res.ocupados?.length){
-      const all=['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30'];
-      all.forEach(h=>container.innerHTML+=`<div class="hslot avail" onclick="selHr('${h}',this)">${h}</div>`);
-    }else{
-      (res.disponiveis||[]).forEach(h=>container.innerHTML+=`<div class="hslot avail" onclick="selHr('${h}',this)">${h}</div>`);
-      (res.ocupados||[]).forEach(h=>container.innerHTML+=`<div class="hslot ocup" title="Ocupado">${h}</div>`);
-    }
+    const all=['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30'];
+    const disponiveis=res.disponiveis||all;
+    const ocupados=res.ocupados||[];
+    disponiveis.forEach(h=>container.innerHTML+=`<div class="hslot avail" onclick="selHr('${h}',this)">${h}</div>`);
+    ocupados.forEach(h=>container.innerHTML+=`<div class="hslot ocup" title="Ocupado">${h}</div>`);
   }catch(e){
     load.style.display='none';
-    const all=['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00'];
-    all.forEach(h=>container.innerHTML+=`<div class="hslot avail" onclick="selHr('${h}',this)">${h}</div>`);
+    ['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00'].forEach(h=>container.innerHTML+=`<div class="hslot avail" onclick="selHr('${h}',this)">${h}</div>`);
   }
 }
 function selHr(h,el){
@@ -947,39 +911,25 @@ async function agendar(){
   const data=document.getElementById('f-data').value;
   const hr=document.getElementById('f-hr').value||horarioSel;
   const obs=document.getElementById('f-obs').value.trim();
-  if(!nome||!tel||!serv||!data||!hr){
-    toast('Preencha todos os campos obrigatórios (*)','error'); return;
-  }
+  if(!nome||!tel||!serv||!data||!hr){toast('Preencha todos os campos obrigatórios (*)','error');return;}
   const btn=document.getElementById('bsub');
-  btn.disabled=true; btn.innerHTML='<span>Enviando...</span>';
+  btn.disabled=true;btn.innerHTML='<span>Enviando...</span>';
   try{
-    const res=await fetch('/api/agendamentos',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nome,email,telefone:tel,servico:serv,data,horario:hr,observacoes:obs})
-    }).then(r=>r.json());
+    const res=await fetch('/api/agendamentos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome,email,telefone:tel,servico:serv,data,horario:hr,observacoes:obs})}).then(r=>r.json());
     if(res.ok){
-      toast('✅ Agendamento confirmado! Você receberá uma confirmação em breve.','success');
-      // Limpar form
+      toast('✅ Agendamento confirmado!','success');
       ['f-nome','f-tel','f-email','f-obs'].forEach(id=>document.getElementById(id).value='');
       document.getElementById('f-serv').value='';
       document.getElementById('f-data').value='';
       document.getElementById('hdisp').innerHTML='';
       document.getElementById('f-hr').value='';
       horarioSel='';
-      // Abrir WA com confirmação
       const dataFmt=new Date(data+'T12:00:00').toLocaleDateString('pt-BR');
       const msg=`🌸 *Arella Beauty Center*\n\nOlá! Acabei de fazer meu agendamento pelo site 😊\n\n*${nome}*\n✨ ${serv}\n📅 ${dataFmt} às ${hr}\n📱 ${tel}`;
       setTimeout(()=>window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`,'_blank'),1500);
-    }else{
-      toast(res.erro||'Erro ao agendar. Tente novamente.','error');
-    }
-  }catch(e){
-    toast('Erro de conexão. Verifique sua internet.','error');
-  }finally{
-    btn.disabled=false;
-    btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Confirmar Agendamento';
-  }
+    }else{toast(res.erro||'Erro ao agendar.','error');}
+  }catch(e){toast('Erro de conexão.','error');}
+  finally{btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Confirmar Agendamento';}
 }
 
 // ── CONTATO ──
@@ -990,57 +940,33 @@ async function enviarContato(){
   const msg=document.getElementById('ct-msg').value.trim();
   if(!nome||!email||!msg){toast('Preencha nome, email e mensagem.','error');return;}
   const btn=document.getElementById('ctbsub');
-  btn.disabled=true; btn.textContent='Enviando...';
+  btn.disabled=true;btn.textContent='Enviando...';
   try{
-    const res=await fetch('/api/contato',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nome,email,telefone:tel,mensagem:msg})
-    }).then(r=>r.json());
-    if(res.ok){
-      toast('✅ Mensagem enviada com sucesso! Responderemos em breve.','success');
-      ['ct-nome','ct-email','ct-tel','ct-msg'].forEach(id=>document.getElementById(id).value='');
-    }else{toast(res.erro||'Erro ao enviar.','error');}
+    const res=await fetch('/api/contato',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome,email,telefone:tel,mensagem:msg})}).then(r=>r.json());
+    if(res.ok){toast('✅ Mensagem enviada!','success');['ct-nome','ct-email','ct-tel','ct-msg'].forEach(id=>document.getElementById(id).value='');}
+    else{toast(res.erro||'Erro ao enviar.','error');}
   }catch(e){toast('Erro de conexão.','error');}
   finally{btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar Mensagem';}
 }
 
-// ── ADMIN AUTH ──
+// ── ADMIN ──
 function openAdmLogin(){document.getElementById('admlogin').classList.add('open');setTimeout(()=>document.getElementById('admpwd').focus(),100);}
 async function admLogin(){
   const pwd=document.getElementById('admpwd').value;
   try{
     const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({senha:pwd})}).then(r=>r.json());
-    if(res.ok){
-      admToken=res.token; sessionStorage.setItem('adm_token',admToken);
-      document.getElementById('admlogin').classList.remove('open');
-      document.getElementById('admpwd').value='';
-      openAdm();
-    }else{toast('Senha incorreta.','error');}
+    if(res.ok){admToken=res.token;sessionStorage.setItem('adm_token',admToken);document.getElementById('admlogin').classList.remove('open');document.getElementById('admpwd').value='';openAdm();}
+    else{toast('Senha incorreta.','error');}
   }catch(e){toast('Erro de conexão.','error');}
 }
-function admLogout(){admToken=null;sessionStorage.removeItem('adm_token');closeAdm();}
+function adminLogout(){admToken=null;sessionStorage.removeItem('adm_token');closeAdm();}
 document.getElementById('admlogin').addEventListener('click',e=>{if(e.target===document.getElementById('admlogin'))document.getElementById('admlogin').classList.remove('open')});
-
-// ── ADMIN PANEL ──
-function openAdm(){
-  if(!admToken){openAdmLogin();return;}
-  document.getElementById('adm').classList.add('open');
-  loadStats(); loadAge(); loadContatos();
-}
+function openAdm(){if(!admToken){openAdmLogin();return;}document.getElementById('adm').classList.add('open');loadStats();loadAge();loadContatos();}
 function closeAdm(){document.getElementById('adm').classList.remove('open');}
 document.getElementById('adm').addEventListener('click',e=>{if(e.target===document.getElementById('adm'))closeAdm()});
-// Footer logo triple click
 let flClicks=0,flTimer;
-document.querySelector('.fli').addEventListener('click',e=>{
-  e.preventDefault(); flClicks++;
-  clearTimeout(flTimer);
-  flTimer=setTimeout(()=>flClicks=0,600);
-  if(flClicks>=3){flClicks=0;openAdmLogin();}
-});
-// Double click nav logo
+document.querySelector('.fli').addEventListener('click',e=>{e.preventDefault();flClicks++;clearTimeout(flTimer);flTimer=setTimeout(()=>flClicks=0,600);if(flClicks>=3){flClicks=0;openAdmLogin();}});
 document.querySelector('.nl').addEventListener('dblclick',openAdmLogin);
-
 function atab(t,el){
   document.querySelectorAll('.atab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.ani').forEach(x=>x.classList.remove('active'));
@@ -1056,78 +982,43 @@ function atab(t,el){
 async function loadStats(){
   try{
     const s=await fetch('/api/stats',{headers:{'x-admin-token':admToken}}).then(r=>r.json());
-    document.getElementById('st-hoje').textContent=s.hoje;
-    document.getElementById('st-mes').textContent=s.mes;
-    document.getElementById('st-pend').textContent=s.pendentes;
-    document.getElementById('st-cont').textContent=s.contatos_nao_lidos;
-    // Badges
-    if(s.pendentes>0){document.getElementById('badge-pend').textContent=s.pendentes;document.getElementById('badge-pend').style.display='inline';}
-    if(s.contatos_nao_lidos>0){document.getElementById('badge-cont').textContent=s.contatos_nao_lidos;document.getElementById('badge-cont').style.display='inline';}
-  }catch(e){console.error(e)}
+    document.getElementById('st-hoje').textContent=s.hoje??0;
+    document.getElementById('st-mes').textContent=s.mes??0;
+    document.getElementById('st-pend').textContent=s.pendentes??0;
+    document.getElementById('st-cont').textContent=s.contatos_nao_lidos??0;
+    const bp=document.getElementById('badge-pend');
+    const bc=document.getElementById('badge-cont');
+    if(s.pendentes>0){bp.textContent=s.pendentes;bp.style.display='inline';}else{bp.style.display='none';}
+    if(s.contatos_nao_lidos>0){bc.textContent=s.contatos_nao_lidos;bc.style.display='inline';}else{bc.style.display='none';}
+  }catch(e){}
 }
 
 // ── AGENDAMENTOS ADMIN ──
-function statusBadge(s){const map={pendente:'bg',confirmado:'bgn',concluido:'bgn',cancelado:'bgb'};return `<span class="badge ${map[s]||'bgr'}">${s}</span>`;}
+function statusBadge(s){const m={pendente:'bg',confirmado:'bgn',concluido:'bgn',cancelado:'bgb'};return `<span class="badge ${m[s]||'bgr'}">${s}</span>`;}
 async function loadAge(){
   const data=document.getElementById('filter-data')?.value||'';
   const status=document.getElementById('filter-status')?.value||'';
   let url=`/api/agendamentos?`;
-  if(data)url+=`data=${data}&`;
-  if(status)url+=`status=${status}`;
+  if(data)url+=`data=${data}&`;if(status)url+=`status=${status}`;
   const list=await fetch(url,{headers:{'x-admin-token':admToken}}).then(r=>r.json()).catch(()=>[]);
   const el=document.getElementById('age-list');
-  if(!list.length){el.innerHTML='<p style="color:var(--dim);padding:20px">Nenhum agendamento encontrado.</p>';return;}
-  el.innerHTML=`<table class="atable"><tr><th>Nome</th><th>Serviço</th><th>Data</th><th>Hora</th><th>Tel</th><th>Status</th><th>Ações</th></tr>
-  ${list.map(a=>`<tr>
-    <td>${a.nome}</td><td>${a.servico}</td>
-    <td>${new Date(a.data+'T12:00:00').toLocaleDateString('pt-BR')}</td>
-    <td>${a.horario}</td>
-    <td><a href="https://wa.me/55${a.telefone.replace(/\D/g,'')}" target="_blank" style="color:var(--gold)">${a.telefone}</a></td>
-    <td>${statusBadge(a.status)}</td>
-    <td style="display:flex;gap:4px">
-      <select onchange="updAge(${a.id},this.value)" style="background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--w);padding:4px 8px;font-size:10px;cursor:pointer">
-        <option value="">Alterar</option>
-        <option value="pendente">Pendente</option>
-        <option value="confirmado">Confirmado</option>
-        <option value="concluido">Concluído</option>
-        <option value="cancelado">Cancelado</option>
-      </select>
-      <button class="abtn danger" onclick="delAge(${a.id})">✕</button>
-    </td>
-  </tr>`).join('')}</table>`;
+  if(!list.length){el.innerHTML='<p style="color:var(--dim);padding:20px">Nenhum agendamento.</p>';return;}
+  el.innerHTML=`<table class="atable"><tr><th>Nome</th><th>Serviço</th><th>Data</th><th>Hora</th><th>Tel</th><th>Status</th><th>Ações</th></tr>`+
+    list.map(a=>`<tr><td>${a.nome}</td><td>${a.servico}</td><td>${new Date(a.data+'T12:00:00').toLocaleDateString('pt-BR')}</td><td>${a.horario}</td><td><a href="https://wa.me/55${a.telefone.replace(/\D/g,'')}" target="_blank" style="color:var(--gold)">${a.telefone}</a></td><td>${statusBadge(a.status)}</td><td style="display:flex;gap:4px"><select onchange="updAge(${a.id},this.value)" style="background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--w);padding:4px 8px;font-size:10px;cursor:pointer"><option value="">Alterar</option><option value="pendente">Pendente</option><option value="confirmado">Confirmado</option><option value="concluido">Concluído</option><option value="cancelado">Cancelado</option></select><button class="abtn danger" onclick="delAge(${a.id})">✕</button></td></tr>`).join('')+'</table>';
 }
 async function loadAge2(){
   const data=document.getElementById('filter-data2')?.value||'';
   const status=document.getElementById('filter-status2')?.value||'';
   let url=`/api/agendamentos?`;
-  if(data)url+=`data=${data}&`;
-  if(status)url+=`status=${status}`;
+  if(data)url+=`data=${data}&`;if(status)url+=`status=${status}`;
   const list=await fetch(url,{headers:{'x-admin-token':admToken}}).then(r=>r.json()).catch(()=>[]);
   const el=document.getElementById('age-list2');
   if(!list.length){el.innerHTML='<p style="color:var(--dim);padding:20px">Nenhum agendamento.</p>';return;}
-  el.innerHTML=`<table class="atable"><tr><th>ID</th><th>Nome</th><th>Email</th><th>Serviço</th><th>Data/Hora</th><th>Tel</th><th>Status</th><th>Ações</th></tr>
-  ${list.map(a=>`<tr>
-    <td style="color:var(--dim)">#${a.id}</td>
-    <td>${a.nome}</td><td style="font-size:11px">${a.email||'—'}</td>
-    <td>${a.servico}</td>
-    <td>${new Date(a.data+'T12:00:00').toLocaleDateString('pt-BR')} ${a.horario}</td>
-    <td><a href="https://wa.me/55${a.telefone.replace(/\D/g,'')}" target="_blank" style="color:var(--gold)">${a.telefone}</a></td>
-    <td>${statusBadge(a.status)}</td>
-    <td><button class="abtn danger" onclick="delAge(${a.id})">✕</button></td>
-  </tr>`).join('')}</table>`;
+  el.innerHTML=`<table class="atable"><tr><th>ID</th><th>Nome</th><th>Email</th><th>Serviço</th><th>Data/Hora</th><th>Tel</th><th>Status</th><th>Ações</th></tr>`+
+    list.map(a=>`<tr><td style="color:var(--dim)">#${a.id}</td><td>${a.nome}</td><td style="font-size:11px">${a.email||'—'}</td><td>${a.servico}</td><td>${new Date(a.data+'T12:00:00').toLocaleDateString('pt-BR')} ${a.horario}</td><td><a href="https://wa.me/55${a.telefone.replace(/\D/g,'')}" target="_blank" style="color:var(--gold)">${a.telefone}</a></td><td>${statusBadge(a.status)}</td><td><button class="abtn danger" onclick="delAge(${a.id})">✕</button></td></tr>`).join('')+'</table>';
 }
-async function updAge(id,status){
-  if(!status)return;
-  await fetch(`/api/agendamentos/${id}`,{method:'PUT',headers:{'Content-Type':'application/json','x-admin-token':admToken},body:JSON.stringify({status})});
-  toast(`Status atualizado: ${status}`);
-  loadAge(); loadAge2(); loadStats();
-}
-async function delAge(id){
-  if(!confirm('Excluir este agendamento?'))return;
-  await fetch(`/api/agendamentos/${id}`,{method:'DELETE',headers:{'x-admin-token':admToken}});
-  toast('Agendamento excluído.');
-  loadAge(); loadAge2(); loadStats();
-}
+async function updAge(id,status){if(!status)return;await fetch(`/api/agendamentos/${id}`,{method:'PUT',headers:{'Content-Type':'application/json','x-admin-token':admToken},body:JSON.stringify({status})});toast(`Status: ${status}`);loadAge();loadAge2();loadStats();}
+async function delAge(id){if(!confirm('Excluir?'))return;await fetch(`/api/agendamentos/${id}`,{method:'DELETE',headers:{'x-admin-token':admToken}});toast('Excluído.');loadAge();loadAge2();loadStats();}
 function exportAge(){window.open('/api/agendamentos?token='+admToken);}
 
 // ── CONTATOS ADMIN ──
@@ -1135,97 +1026,53 @@ async function loadContatos(){
   const list=await fetch('/api/contatos',{headers:{'x-admin-token':admToken}}).then(r=>r.json()).catch(()=>[]);
   const el=document.getElementById('cont-list');
   if(!list.length){el.innerHTML='<p style="color:var(--dim);padding:20px">Nenhuma mensagem.</p>';return;}
-  el.innerHTML=`<table class="atable"><tr><th>Nome</th><th>Email</th><th>Telefone</th><th>Mensagem</th><th>Data</th><th>Status</th></tr>
-  ${list.map(c=>`<tr onclick="markRead(${c.id},this)" style="cursor:pointer;${!c.lido?'background:rgba(201,169,110,0.04)':''}">
-    <td style="font-weight:${c.lido?'300':'500'}">${c.nome}</td>
-    <td><a href="mailto:${c.email}" style="color:var(--gold)">${c.email}</a></td>
-    <td>${c.telefone||'—'}</td>
-    <td style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.mensagem}</td>
-    <td style="font-size:11px">${new Date(c.criado_em).toLocaleDateString('pt-BR')}</td>
-    <td>${c.lido?'<span class="badge bgr">Lido</span>':'<span class="badge bg">Novo</span>'}</td>
-  </tr>`).join('')}</table>`;
+  el.innerHTML=`<table class="atable"><tr><th>Nome</th><th>Email</th><th>Telefone</th><th>Mensagem</th><th>Data</th><th>Status</th></tr>`+
+    list.map(c=>`<tr onclick="markRead(${c.id},this)" style="cursor:pointer;${!c.lido?'background:rgba(201,169,110,.04)':''}"><td style="font-weight:${c.lido?'300':'500'}">${c.nome}</td><td><a href="mailto:${c.email}" style="color:var(--gold)">${c.email}</a></td><td>${c.telefone||'—'}</td><td style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.mensagem}</td><td style="font-size:11px">${new Date(c.criado_em).toLocaleDateString('pt-BR')}</td><td>${c.lido?'<span class="badge bgr">Lido</span>':'<span class="badge bg">Novo</span>'}</td></tr>`).join('')+'</table>';
 }
-async function markRead(id,row){
-  await fetch(`/api/contatos/${id}/lido`,{method:'PUT',headers:{'x-admin-token':admToken}});
-  row.style.background=''; loadStats();
-}
+async function markRead(id,row){await fetch(`/api/contatos/${id}/lido`,{method:'PUT',headers:{'x-admin-token':admToken}});row.style.background='';loadStats();}
 
-// ── CONFIG ──
+// ── CONFIG ADMIN ──
 async function loadCfg(){
   try{
     const cfg=await fetch('/api/config',{headers:{'x-admin-token':admToken}}).then(r=>r.json());
-    const fields={
-      'cfg-wa':'whatsapp','cfg-end':'endereco','cfg-hr':'horarios',
-      'cfg-ig':'instagram','cfg-sobre':'sobre_texto',
-      'cfg-anos':'stat_anos','cfg-cli':'stat_clientes','cfg-sv':'stat_servicos',
-      'cfg-espn':'esp_nome','cfg-espc':'esp_cargo',
-    };
-    for(const [id,key] of Object.entries(fields)){
-      const el=document.getElementById(id);
-      if(el&&cfg[key]!==undefined)el.value=cfg[key];
-    }
-  }catch(e){console.error(e)}
+    const fields={'cfg-wa':'whatsapp','cfg-end':'endereco','cfg-hr':'horarios','cfg-ig':'instagram','cfg-sobre':'sobre_texto','cfg-anos':'stat_anos','cfg-cli':'stat_clientes','cfg-sv':'stat_servicos','cfg-espn':'esp_nome','cfg-espc':'esp_cargo'};
+    for(const[id,key]of Object.entries(fields)){const el=document.getElementById(id);if(el&&cfg[key]!==undefined)el.value=cfg[key];}
+  }catch(e){}
 }
 async function saveCfg(){
-  const data={
-    whatsapp:document.getElementById('cfg-wa').value,
-    endereco:document.getElementById('cfg-end').value,
-    horarios:document.getElementById('cfg-hr').value,
-    instagram:document.getElementById('cfg-ig').value,
-  };
+  const data={whatsapp:document.getElementById('cfg-wa').value,endereco:document.getElementById('cfg-end').value,horarios:document.getElementById('cfg-hr').value,instagram:document.getElementById('cfg-ig').value};
   await fetch('/api/config',{method:'PUT',headers:{'Content-Type':'application/json','x-admin-token':admToken},body:JSON.stringify(data)});
-  // Update live
-  if(data.whatsapp){waNum=data.whatsapp;document.getElementById('c-wa').href=`https://wa.me/${data.whatsapp}`;}
+  if(data.whatsapp){waNum=data.whatsapp;updateWA(waNum);}
   if(data.horarios)document.getElementById('info-hr').innerHTML=data.horarios;
   if(data.endereco)document.getElementById('info-end').innerHTML=data.endereco.replace(/\n/g,'<br>');
-  toast('✅ Configurações salvas!');
+  toast('✅ Salvo!');
 }
 async function saveContent(){
-  const data={
-    sobre_texto:document.getElementById('cfg-sobre').value,
-    stat_anos:document.getElementById('cfg-anos').value,
-    stat_clientes:document.getElementById('cfg-cli').value,
-    stat_servicos:document.getElementById('cfg-sv').value,
-    esp_nome:document.getElementById('cfg-espn').value,
-    esp_cargo:document.getElementById('cfg-espc').value,
-  };
+  const data={sobre_texto:document.getElementById('cfg-sobre').value,stat_anos:document.getElementById('cfg-anos').value,stat_clientes:document.getElementById('cfg-cli').value,stat_servicos:document.getElementById('cfg-sv').value,esp_nome:document.getElementById('cfg-espn').value,esp_cargo:document.getElementById('cfg-espc').value};
   await fetch('/api/config',{method:'PUT',headers:{'Content-Type':'application/json','x-admin-token':admToken},body:JSON.stringify(data)});
-  // Update live
-  if(data.sobre_texto)document.getElementById('sobre-txt').textContent=data.sobre_texto;
+  if(data.sobre_texto){document.getElementById('sobre-txt').textContent=data.sobre_texto;document.getElementById('footer-desc').textContent=data.sobre_texto;}
   if(data.stat_anos)document.getElementById('s-anos').textContent=data.stat_anos;
   if(data.stat_clientes)document.getElementById('s-cli').textContent=data.stat_clientes;
   if(data.stat_servicos)document.getElementById('s-sv').textContent=data.stat_servicos;
   if(data.esp_nome)document.getElementById('esp-nome').textContent=data.esp_nome;
   if(data.esp_cargo)document.getElementById('esp-cargo').textContent=data.esp_cargo;
-  toast('✅ Conteúdo atualizado!');
+  toast('✅ Salvo!');
 }
 async function changePwd(){
   const p1=document.getElementById('cfg-pwd').value;
   const p2=document.getElementById('cfg-pwd2').value;
-  if(!p1||p1.length<6){toast('Senha deve ter mínimo 6 caracteres.','error');return;}
+  if(!p1||p1.length<6){toast('Mínimo 6 caracteres.','error');return;}
   if(p1!==p2){toast('Senhas não conferem.','error');return;}
   await fetch('/api/config',{method:'PUT',headers:{'Content-Type':'application/json','x-admin-token':admToken},body:JSON.stringify({admin_senha:p1})});
   toast('✅ Senha alterada!');
 }
 async function loadEmailCfg(){
-  try{
-    const cfg=await fetch('/api/config',{headers:{'x-admin-token':admToken}}).then(r=>r.json());
-    document.getElementById('cfg-econtato').value=cfg.email_contato||'';
-    document.getElementById('cfg-ehost').value=cfg.email_smtp_host||'smtp.gmail.com';
-    document.getElementById('cfg-eport').value=cfg.email_smtp_port||'587';
-    document.getElementById('cfg-euser').value=cfg.email_smtp_user||'';
-  }catch(e){}
+  try{const cfg=await fetch('/api/config',{headers:{'x-admin-token':admToken}}).then(r=>r.json());document.getElementById('cfg-econtato').value=cfg.email_contato||'';document.getElementById('cfg-ehost').value=cfg.email_smtp_host||'smtp.gmail.com';document.getElementById('cfg-eport').value=cfg.email_smtp_port||'587';document.getElementById('cfg-euser').value=cfg.email_smtp_user||'';}catch(e){}
 }
 async function saveEmail(){
-  const data={
-    email_contato:document.getElementById('cfg-econtato').value,
-    email_smtp_host:document.getElementById('cfg-ehost').value,
-    email_smtp_port:document.getElementById('cfg-eport').value,
-    email_smtp_user:document.getElementById('cfg-euser').value,
-    email_smtp_pass:document.getElementById('cfg-epass').value,
-  };
+  const data={email_contato:document.getElementById('cfg-econtato').value,email_smtp_host:document.getElementById('cfg-ehost').value,email_smtp_port:document.getElementById('cfg-eport').value,email_smtp_user:document.getElementById('cfg-euser').value,email_smtp_pass:document.getElementById('cfg-epass').value};
   await fetch('/api/config',{method:'PUT',headers:{'Content-Type':'application/json','x-admin-token':admToken},body:JSON.stringify(data)});
-  toast('✅ Email configurado!');
+  toast('✅ Email salvo!');
 }
 
 // ── REVEAL ──

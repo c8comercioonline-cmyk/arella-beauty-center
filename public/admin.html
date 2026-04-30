@@ -253,6 +253,7 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:20px 0}
     <div class="nav-item" onclick="showSection('config',this)">⚙️ Configurações</div>
     <div class="nav-item" onclick="showSection('seo',this)">🔍 SEO</div>
     <div class="nav-item" onclick="showSection('email',this)">📧 Email / SMTP</div>
+    <div class="nav-item" onclick="showSection('calendar',this)">📅 Google Agenda</div>
     <div class="nav-item" onclick="showSection('corres',this)">🎨 Cores & Logo</div>
 
     <div style="margin-top:auto;padding:20px;border-top:1px solid var(--border)">
@@ -419,6 +420,22 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:20px 0}
           <div class="form-row"><div class="form-group"><label>SMTP Host</label><input type="text" id="smtp-host" placeholder="smtp.gmail.com"></div><div class="form-group"><label>SMTP Port</label><input type="text" id="smtp-port" placeholder="587"></div></div>
           <div class="form-row full"><div class="form-group"><label>Senha / App Password</label><input type="password" id="smtp-pass"></div></div>
           <div class="form-actions"><button class="btn btn-g" onclick="saveSmtp()">Salvar</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOOGLE CALENDAR -->
+    <div class="section" id="sec-calendar">
+      <div class="topbar"><h1>Google Calendar</h1></div>
+      <div class="form-section">
+        <div class="form-section-head open" onclick="toggleSection(this)"><span>Configuração da Agenda</span><span class="arrow">▼</span></div>
+        <div class="form-section-body open">
+          <p style="font-size:12px;color:var(--dim);margin-bottom:20px;line-height:1.8">Integre com Google Calendar para receber agendamentos automaticamente na sua agenda. Você será notificado por email antes do horário.</p>
+          <div class="form-group"><label>Email da Conta Google (Service Account)</label><input type="email" id="gcal-email" placeholder="seu-servico@projeto.iam.gserviceaccount.com"></div>
+          <div class="form-group"><label>ID do Calendário</label><input type="text" id="gcal-calendar-id" placeholder="seuemail@gmail.com ou endereço do calendário"></div>
+          <div class="form-group"><label>Chave Privada (private_key)</label><textarea id="gcal-private-key" placeholder="-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANB...\n-----END PRIVATE KEY-----" style="min-height:120px;font-family:monospace;font-size:11px"></textarea></div>
+          <p style="font-size:11px;color:var(--dim);margin-top:12px">📌 Para configurar: crie uma Service Account no <a href="https://console.cloud.google.com/" target="_blank" style="color:var(--gold)">Google Cloud Console</a>, ative a API do Calendar e compartilhe seu calendário com o email da service account.</p>
+          <div class="form-actions"><button class="btn btn-g" onclick="saveGCal()">Salvar</button></div>
         </div>
       </div>
     </div>
@@ -1199,6 +1216,10 @@ async function loadConfig() {
       const el = document.getElementById(id);
       if (el && cfg[key] !== undefined) el.value = cfg[key];
     }
+    // Google Calendar
+    if (cfg.google_cal_email) document.getElementById('gcal-email').value = cfg.google_cal_email;
+    if (cfg.google_cal_calendar_id) document.getElementById('gcal-calendar-id').value = cfg.google_cal_calendar_id;
+    if (cfg.google_cal_private_key) document.getElementById('gcal-private-key').value = cfg.google_cal_private_key;
     // SEO
     try {
       const seo = await fetch('/api/admin/seo', { headers: { 'x-admin-token': admToken } }).then(r => r.json());
@@ -1275,6 +1296,17 @@ async function saveSmtp() {
   };
   await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify(data) });
   toast('SMTP salvo!');
+}
+
+// ── GOOGLE CALENDAR ──
+async function saveGCal() {
+  const data = {
+    google_cal_email: document.getElementById('gcal-email').value,
+    google_cal_calendar_id: document.getElementById('gcal-calendar-id').value,
+    google_cal_private_key: document.getElementById('gcal-private-key').value,
+  };
+  await fetch('/api/config', { method: 'PUT', headers: authHeaders(), body: JSON.stringify(data) });
+  toast('Google Calendar salvo! Agendamentos aparecerão na sua agenda.');
 }
 
 // ── COLORS & LOGO ──

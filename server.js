@@ -25,6 +25,15 @@ async function initDatabase() {
   db = new SQL.Database(data);
   createTables();
   seedData();
+
+  // Salva o banco a cada 5 minutos para minimizar perda de dados
+  setInterval(saveDatabase, 5 * 60 * 1000);
+
+  if (process.env.RAILWAY_ENVIRONMENT) {
+    console.warn('⚠️  ATENÇÃO: Rodando no Railway com banco de arquivos. Dados podem ser perdidos ao reiniciar o container.');
+    console.warn('⚠️  Recomendado: migrar para PostgreSQL para persistência garantida.');
+  }
+
   return db;
 }
 
@@ -289,13 +298,18 @@ function getCalendarClient() {
   if (calendarClient) return calendarClient;
 
   const cfg = getConfigPublica();
-  if (!cfg.google_cal_email || !cfg.google_cal_private_key) {
+
+  // Lê das variáveis de ambiente primeiro, depois do banco
+  const calEmail = process.env.GOOGLE_CAL_EMAIL || cfg.google_cal_email;
+  const rawKey = process.env.GOOGLE_CAL_PRIVATE_KEY || cfg.google_cal_private_key;
+
+  if (!calEmail || !rawKey) {
     console.log('Google Calendar: credenciais não configuradas');
     return null;
   }
 
   try {
-    let privateKey = cfg.google_cal_private_key;
+    let privateKey = rawKey;
 
     // Converter \n literal (barra invertida + n) para quebra de linha real
     privateKey = privateKey.replace(/\\n/g, '\n');
@@ -311,7 +325,7 @@ function getCalendarClient() {
     privateKey = privateKey.trim();
 
     calendarClient = new google.auth.JWT(
-      cfg.google_cal_email,
+      calEmail,
       null,
       privateKey,
       ['https://www.googleapis.com/auth/calendar']

@@ -325,13 +325,19 @@ function getCalendarClient() {
 
 async function createCalendarEvent(appointment) {
   const cfg = getConfigPublica();
-  if (!cfg.google_cal_calendar_id) {
+
+  // Ler de env OU do banco
+  const calendarId = process.env.GOOGLE_CAL_CALENDAR_ID || cfg.google_cal_calendar_id;
+
+  if (!calendarId) {
     console.log('Google Calendar: calendar_id não configurado');
     return null;
   }
 
   const auth = getCalendarClient();
   if (!auth) return null;
+
+  const calEmail = process.env.GOOGLE_CAL_EMAIL || cfg.google_cal_email;
 
   try {
     const calendar = google.calendar({ version: 'v3', auth });
@@ -381,7 +387,7 @@ _Agendado via site_
     }
 
     const response = await calendar.events.insert({
-      calendarId: cfg.google_cal_calendar_id,
+      calendarId: calendarId,
       resource: event,
     });
 
